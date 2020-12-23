@@ -2,7 +2,7 @@
   <v-row>
     <v-col>
       <h1>Events</h1>
-        <template v-if='events.lenght'>
+        <template v-if='events'>
           <v-card
             tile
             class="my-4"
@@ -27,17 +27,18 @@
             </v-card-actions>
           </v-card>
         </template>
-
-        <v-alert
-          border="bottom"
-          colored-border
-          type="info"
-          elevation="2"
-        >
-        <p>
-          Pease click the plus button below and create a new event
-        </p>
-        </v-alert>
+        <template v-else>
+          <v-alert
+            border="bottom"
+            colored-border
+            type="info"
+            elevation="2"
+          >
+          <p>
+            Pease click the plus button below and create a new event
+          </p>
+          </v-alert>
+        </template>
 
         <v-btn
           :to="`/events/create`"
