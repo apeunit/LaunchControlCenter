@@ -10,6 +10,7 @@
       <v-card
         class='my-6 py-1 px-3'
         max-width="450"
+        :loading="loading"
       >
         <v-card-text>
           <v-text-field
@@ -32,10 +33,26 @@
             :type="pwVisible ? 'text' : 'password'"
             >
           </v-text-field>
+          <v-alert
+            v-if="registerError"
+            text
+            prominent
+            type="error"
+            border="right"
+            icon="mdi-cloud-alert"
+          >
+            <h3>Error</h3>
+            <p>
+              {{registerError}}
+            </p>
+            <p>
+              Please try again.
+            </p>
+          </v-alert>
         </v-card-text>
         <v-card-actions>
           <v-btn
-            :disabled="!valid"
+            :disabled="!valid || loading"
             type="submit"
           >
             Register
@@ -46,11 +63,12 @@
   </div>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 export default {
   name: "Register",
   data() {
     return {
+      registerError: false,
       valid: false,
       pwVisible: false,
       emailRules: [
@@ -64,14 +82,29 @@ export default {
       password: "",
     }
   },
+  computed: {
+    ...mapState([
+      'loading'
+    ])
+  },
   methods: {
     validate () {
       this.$refs.form.validate()
     },
     submit() {
       this.authRegister({
-          email: this.email,
-          pass: this.password
+        email: this.email,
+        pass:  this.password
+      })
+      .then(result => {
+        if(typeof result.code !== 'undefined') {
+          if(result.code !== 200) {
+            this.registerError = result.message
+          } else {
+            alert('Your account was created succesfully. Pease log in now.')
+            this.$router.push('/login')
+          }
+        }
       })
     },
     ...mapActions([
