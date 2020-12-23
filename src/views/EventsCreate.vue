@@ -64,7 +64,7 @@
           cols="12"
           md="4"
           v-for="(g, n) in model.genesis_accounts"
-          :key="g.name"
+          :key="n"
         >
           <v-card>
             <v-card-text>
@@ -160,8 +160,7 @@ export default {
         ga.genesis_accounts = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
         return ga;
       });
-      console.log(this.model);
-      //this.createEvent(this.model);
+      this.createEvent(this.model);
     },
     addGenesis() {
       this.model.genesis_accounts.push({
