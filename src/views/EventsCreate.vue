@@ -163,6 +163,10 @@ export default {
   methods: {
     submit() {
       this.createEvent(this.model)
+        .then(result =>{
+          console.log(result)
+          this.$router.replace('/events/')
+        })
     },
     addGenesis() {
       this.model.genesis_accounts.push({
