@@ -28,13 +28,50 @@
         class="pa-4"
       >
         <h2>Settings</h2>
-        <p>id: {{event.id}}</p>
-        <p>token_symbol: {{event.token_symbol}}</p>
-        <p>owner: {{event.owner}}</p>
-        <p>provider: {{event.provider}}</p>
-        <p>created_on: {{event.created_on}}</p>
-        <p>starts_on: {{event.starts_on}}</p>
-        <p>ends_on: {{event.ends_on}}</p>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">
+                    Name
+                </th>
+                <th class="text-left">
+                    Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>id</td>
+                <td>{{event.id}}</td>
+              </tr>
+              <tr>
+                <td>token symbol</td>
+                <td>{{event.token_symbol}}</td>
+              </tr>
+              <tr>
+                <td>owner</td>
+                <td>{{event.owner}}</td>
+              </tr>
+              <tr>
+                <td>provider</td>
+                <td>{{event.provider}}</td>
+              </tr>
+              <tr>
+                <td>created on</td>
+                <td>{{event.created_on}}</td>
+              </tr>
+              <tr>
+                <td>starts on</td>
+                <td>{{event.starts_on}}</td>
+              </tr>
+              <tr>
+                <td>ends on</td>
+                <td>{{event.ends_on}}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
 
         <h2>Accounts:</h2>
 
@@ -45,13 +82,29 @@
           :key='a.name'
         >
           <v-card-title>
-            address: {{a.address}}
+            {{a.name}}
           </v-card-title>
           <v-card-text>
-            <p>name: {{a.name}}</p>
-            <p>genesis_balance: {{a.genesis_balance}}</p>
-            <p>validator: {{a.validator}}</p>
-            <p>faucet: {{a.faucet}}</p>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Name
+                    </th>
+                    <th class="text-left">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>address</td><td>{{a.address}}</td></tr>
+                  <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr>
+                  <tr><td>validator</td><td>{{a.validator}}</td></tr>
+                  <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
+              </tbody>
+            </template>
+          </v-simple-table>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -60,7 +113,10 @@
       >
         <h2>Deploy</h2>
         <p>
-          Deploy can not be undone.
+          Deploy can not be undone. 
+        </p>
+        <p>
+          Deploy can take a up to 30 seconds.
         </p>
         <v-alert
           v-if="deployError"
@@ -82,7 +138,6 @@
           @click="deploy"
           dark
           :loading="loading"
-          :disabled="loading"
           color="green"
         >
           Deploy
