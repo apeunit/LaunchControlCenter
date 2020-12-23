@@ -22,6 +22,7 @@
                 label="Owner Email"
               ></v-text-field>
               <v-text-field
+                v-if='false'
                 v-model="model.provider"
                 label="Provider"
               ></v-text-field>
@@ -32,6 +33,7 @@
     </v-card>
     <v-card
       class="my-4"
+      v-if='false'
     >
       <v-card-title>Event Payload</v-card-title>
       <v-card-text>
@@ -70,7 +72,7 @@
         <v-col
           cols="12" md="4"
           v-for='(g,n) in model.genesis_accounts'
-          :key='g.name'
+          :key='n'
         >
           <v-card>
             <v-card-text>
@@ -128,20 +130,21 @@
       elevation="2"
       type="submit"
       class="my-6"
+      :loading="loading"
     >Save Event</v-btn>
   </v-form>
 </template>
 <script>
-import {mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 export default {
   name: 'WorkspacesCreate',
   data () {
     return {
       valid: false,
       model: {
-        owner: "string",
-        provider: "string",
-        token_symbol: "string",
+        owner: this.authName,
+        provider: "",
+        token_symbol: "evtx",
         payload: {
           binary_path: "string",
           binary_url: "string",
@@ -152,13 +155,19 @@ export default {
         genesis_accounts: [
           {
             name: "Genesis Account #1",
-            genesis_balance: "10000",
+            genesis_balance: "500drops,100000evtx,1000stake",
             faucet: true,
             validator: true
           }
         ],
       }
     }
+  },
+  computed: {
+    ...mapState([
+      'authName',
+      'loading'
+    ])
   },
   methods: {
     submit() {
@@ -171,7 +180,7 @@ export default {
     addGenesis() {
       this.model.genesis_accounts.push({
         name: `Genesis Account #${this.model.genesis_accounts.length+1}`,
-        genesis_balance: "1000",
+        genesis_balance: "500drops,100000evtx,1000stake",
         validator: true,
         faucet: true
       })
@@ -182,6 +191,9 @@ export default {
     ...mapActions([
       'createEvent'
     ])
+  },
+  mounted() {
+    this.model.owner = this.authName
   }
 }
 </script>
