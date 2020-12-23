@@ -16,13 +16,50 @@
     <v-tabs-items v-model="tab">
       <v-tab-item class="pa-4">
         <h2>Settings</h2>
-        <p>id: {{ event.id }}</p>
-        <p>token_symbol: {{ event.token_symbol }}</p>
-        <p>owner: {{ event.owner }}</p>
-        <p>provider: {{ event.provider }}</p>
-        <p>created_on: {{ event.created_on }}</p>
-        <p>starts_on: {{ event.starts_on }}</p>
-        <p>ends_on: {{ event.ends_on }}</p>
+        <v-simple-table>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">
+                    Name
+                </th>
+                <th class="text-left">
+                    Value
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>id</td>
+                <td>{{event.id}}</td>
+              </tr>
+              <tr>
+                <td>token symbol</td>
+                <td>{{event.token_symbol}}</td>
+              </tr>
+              <tr>
+                <td>owner</td>
+                <td>{{event.owner}}</td>
+              </tr>
+              <tr>
+                <td>provider</td>
+                <td>{{event.provider}}</td>
+              </tr>
+              <tr>
+                <td>created on</td>
+                <td>{{event.created_on}}</td>
+              </tr>
+              <tr>
+                <td>starts on</td>
+                <td>{{event.starts_on}}</td>
+              </tr>
+              <tr>
+                <td>ends on</td>
+                <td>{{event.ends_on}}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
 
         <h2>Accounts:</h2>
 
@@ -32,19 +69,65 @@
           v-for="a in event.accounts"
           :key="a.name"
         >
-          <v-card-title> address: {{ a.address }} </v-card-title>
+          <v-card-title>
+            {{a.name}}
+          </v-card-title>
           <v-card-text>
-            <p>name: {{ a.name }}</p>
-            <p>genesis_balance: {{ a.genesis_balance }}</p>
-            <p>validator: {{ a.validator }}</p>
-            <p>faucet: {{ a.faucet }}</p>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Name
+                    </th>
+                    <th class="text-left">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>address</td><td>{{a.address}}</td></tr>
+                  <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr>
+                  <tr><td>validator</td><td>{{a.validator}}</td></tr>
+                  <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
+              </tbody>
+            </template>
+          </v-simple-table>
           </v-card-text>
         </v-card>
       </v-tab-item>
       <v-tab-item class="pa-4">
         <h2>Deploy</h2>
-        <p>Deploy can not be undone.</p>
-        <v-btn @click="deploy" dark color="green"> Deploy </v-btn>
+        <p>
+          Deploy can not be undone. 
+        </p>
+        <p>
+          Deploy can take a up to 30 seconds.
+        </p>
+        <v-alert
+          v-if="deployError"
+          text
+          prominent
+          type="error"
+          border="right"
+          icon="mdi-cloud-alert"
+        >
+          <h3>Error</h3>
+          <p>
+           {{deployError}}
+          </p>
+          <p>
+           Please try to deploy again.
+          </p>
+        </v-alert>
+        <v-btn
+          @click="deploy"
+          dark
+          :loading="loading"
+          color="green"
+        >
+          Deploy
+        </v-btn>
       </v-tab-item>
 
       <v-tab-item class="pa-4">
@@ -56,37 +139,55 @@
   </v-card>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from "vuex"
 export default {
   name: "Event",
   data() {
     return {
       tab: null,
-      items: ["Settings", "Deploy", "Delete"],
-    };
+      deployError: null,
+      items: [
+        'Settings',
+        'Deploy',
+        'Delete'
+      ],
+    }
   },
   computed: {
     id() {
       return this.$route.params.id;
     },
     event() {
-      return this.events.filter((e) => e.id === this.id)[0];
+      return this.events.filter((e) => e.id === this.id)[0]
     },
-    ...mapState(["events"]),
+    ...mapState([
+      'events',
+      'loading'
+    ])
   },
   methods: {
     destroy() {
-      if (confirm("Are you sure you want to delete this event?"))
-        this.deleteEvent(this.id).then(this.$router.push({ path: "/events" }));
+      if(confirm('Are you sure you want to delete this event?'))
+        this.deleteEvent(this.id)
+          .then(() => {
+            this.$router.replace('/events/')
+          })
     },
     deploy() {
-      if (confirm("Are you sure you want to deploy this event?"))
-        this.deployEvent(this.id);
+      if(confirm('Are you sure you want to deploy this event?'))
+        this.deployEvent(this.id)
+          .then(result => {
+            if(typeof result.code !== 'undefined') {
+              if(result.code === 500) {
+                this.deployError = result.message
+              }
+            }
+          })
     },
     ...mapActions(["loadEvent", "deleteEvent", "deployEvent"]),
   },
   mounted() {
     this.loadEvent(this.id);
   },
-};
+}
 </script>

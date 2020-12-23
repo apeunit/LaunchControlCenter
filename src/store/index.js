@@ -96,26 +96,30 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    authRegister({ commit }, payload) {
-      const url = `/v1/auth/register`
-      Vue.axios
-        .post(url, payload)
-        .then(r => r.data)
-        .then(data => {
-          console.log(data)
-          commit("SET_STATUS", data)
-          if (data.code == 200) {
-            router.push("Login")
-            return
-          }
-          confirm("Sorry, an user already exists with this email")
-        })
-        .catch(e => {
-          console.log(e)
-        })
-        .then(() => {
-          commit('SET_LOADING', false)
-        })
+    authRegister({commit}, payload) {
+      commit('SET_LOADING', true)
+      return new Promise((resolve,reject) => {
+        const url = `/v1/auth/register`
+        Vue.axios
+          .post(url, payload)
+          .then(r => r.data)
+          .then(data => {
+            console.log(data)
+            commit("SET_STATUS", data)
+            if (data.code == 200) {
+              router.push("Login")
+              return
+            }
+            confirm("Sorry, an user already exists with this email")
+          })
+          .catch(e => {
+            reject(e)
+            console.log(e)
+          })
+          .then(() => {
+            commit('SET_LOADING', false)
+          })
+      })
     },
     loadEvents({ commit }) {
       const url = `/v1/events`
@@ -133,23 +137,28 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    createEvent({ commit }, payload) {
-      const url = `/v1/events`
-      return Vue.axios
-        .post(url, payload)
-        .then(r => r.data)
-        .then(data => {
-          console.log(data)
-          //message: string-757d4915c70351874d60
-        })
-        .catch(e => {
-          console.log(e)
-        })
-        .then(() => {
-          commit('SET_LOADING', false)
-        })
+    createEvent({commit}, payload) {
+      return new Promise((resolve, reject) => {
+        const url = `/v1/events`
+        Vue.axios
+          .post(url, payload)
+          .then(r => r.data)
+          .then(data => {
+            console.log(data)
+            resolve(data)
+            //message: string-757d4915c70351874d60
+          })
+          .catch(e => {
+            console.log(e)
+            reject(e)
+          })
+          .then(() => {
+            commit('SET_LOADING', false)
+          })
+      })
     },
-    loadEvent({ commit }, id) {
+    loadEvent({commit}, id) {
+      commit('SET_LOADING', true)
       const url = `/v1/events/${id}`
       Vue.axios
         .get(url)
@@ -165,36 +174,46 @@ export default new Vuex.Store({
           commit('SET_LOADING', false)
         })
     },
-    deleteEvent({ commit }, id) {
-      const url = `/v1/events/${id}`
-      return Vue.axios
-        .delete(url)
-        .then(r => r.data)
-        .then(data => {
-          console.log(data)
-          commit("SET_STATUS", data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-        .then(() => {
-          commit('SET_LOADING', false)
-        })
+    deleteEvent({commit}, id) {
+      commit('SET_LOADING', true)
+      return new Promise((resolve, reject) => {
+        const url = `/v1/events/${id}`
+        Vue.axios
+          .delete(url)
+          .then(r => r.data)
+          .then(data => {
+            console.log(data)
+            resolve(data)
+            commit("SET_STATUS", data)
+          })
+          .catch(e => {
+            reject(e)
+            console.log(e)
+          })
+          .then(() => {
+            commit('SET_LOADING', false)
+          })
+      })
     },
-    deployEvent({ commit }, id) {
-      const url = `/v1/events/${id}/deploy`
-      Vue.axios
-        .put(url)
-        .then(r => r.data)
-        .then(data => {
-          console.log(data)
-        })
-        .catch(e => {
-          console.log(e)
-        })
-        .then(() => {
-          commit('SET_LOADING', false)
-        })
+    deployEvent({commit}, id) {
+      commit('SET_LOADING', true)
+      return new Promise((resolve, reject) => {
+        const url = `/v1/events/${id}/deploy`
+        Vue.axios
+          .put(url)
+          .then(r => r.data)
+          .then(data => {
+            console.log(data)
+            resolve(data)
+          })
+          .catch(e => {
+            console.log(e)
+            reject(e)
+          })
+          .then(() => {
+            commit('SET_LOADING', false)
+          })
+      })
     }
   },
   modules: {

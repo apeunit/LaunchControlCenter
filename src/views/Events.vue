@@ -2,29 +2,43 @@
   <v-row>
     <v-col>
       <h1>Events</h1>
-        <v-card
-          tile
-          class="my-4"
-          v-for='event in events'
-          :key='event.id'
-        >
-          <v-card-title>
-            Token Symbol: {{event.token_symbol}}
-          </v-card-title>
-          <v-card-subtitle>
-            {{event.id}}
-          </v-card-subtitle>
-          <v-card-text>
-            Starts on: {{event.starts_on}}
-          </v-card-text>
-          <v-card-actions>
-            <v-btn
-              :to="`/event/${event.id}`"
-            >
-              Select
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+        <template v-if='events'>
+          <v-card
+            tile
+            class="my-4"
+            v-for='event in events'
+            :key='event.id'
+          >
+            <v-card-title>
+              Token Symbol: {{event.token_symbol}}
+            </v-card-title>
+            <v-card-subtitle>
+              {{event.id}}
+            </v-card-subtitle>
+            <v-card-text>
+              Starts on: {{event.starts_on}}
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                :to="`/event/${event.id}`"
+              >
+                Select
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </template>
+        <template v-else>
+          <v-alert
+            border="bottom"
+            colored-border
+            type="info"
+            elevation="2"
+          >
+          <p>
+            Pease click the plus button below and create a new event
+          </p>
+          </v-alert>
+        </template>
 
         <v-btn
           :to="`/events/create`"
