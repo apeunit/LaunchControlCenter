@@ -129,8 +129,8 @@ export default {
       token_gas_symbol: "evtx",
       token_stake_symbol: "stake",
       model: {
-        owner: "",
-        provider: "",
+        // owner: "",
+        // provider: "",
         token_symbol: "DROPS",
         // payload: {
         //   binary_path: "string",
@@ -160,7 +160,7 @@ export default {
         ga.genesis_accounts = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
         return ga;
       });
-      this.createEvent(this.model);
+      this.createEvent(this.model).then(this.$router.push({ path: "/events" }));
     },
     addGenesis() {
       this.model.genesis_accounts.push({

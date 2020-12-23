@@ -127,6 +127,7 @@ export default new Vuex.Store({
     createEvent({commit}, payload) {
       const url = `/v1/events`
       Vue.axios
+      return Vue.axios
         .post(url, payload)
         .then(r => r.data)
         .then(data => {
