@@ -10,7 +10,7 @@
               <v-text-field
                 v-model="model.token_symbol"
                 label="Token Symbol"
-                placeholder="DROPS"
+                value="DROPS"
               ></v-text-field>
               <!-- <v-text-field
                 v-model="model.owner"
@@ -68,21 +68,34 @@
         >
           <v-card>
             <v-card-text>
-              <v-text-field v-model="g.name" label="Name"></v-text-field>
+              <v-text-field v-model="g.name" label="E-Mail"></v-text-field>
               <v-text-field
-                v-model="g.genesis_balance"
-                label="Genesis Balance"
-                :value="`500${model.tokenSymbol},1000000evtx,100000000stake`"
+                hint="Main token balance"
+                v-model="g._amount_token"
+                :suffix="`${model.token_symbol}`"
+                label="Genesis Token Balance"
+              ></v-text-field>
+              <v-text-field
+                v-model="g._amount_gas"
+                label="Gas Token Balance"
+                :suffix="`${token_gas_symbol}`"
+                hint="balance for tokens used to pay for gas"
+              ></v-text-field>
+              <v-text-field
+                v-model="g._amount_stake"
+                label="Stake"
+                :suffix="`${token_stake_symbol}`"
+                hint="stake assigned to the account"
               ></v-text-field>
               <v-switch
                 v-model="g.faucet"
-                :label="`Faucet: ${g.faucet.toString()}`"
-                :value="false"
+                :label="`Is Faucet`"
+                hint="a faucet service will be connected to this account"
               ></v-switch>
               <v-switch
                 v-model="g.validator"
-                :label="`Validator: ${g.validator.toString()}`"
-                :value="false"
+                :label="`Is validator`"
+                hint="the account will be a validator"
               ></v-switch>
               <v-btn @click="removeGenesis(n)" class="mx-2" dark color="red">
                 <v-icon dark> mdi-minus </v-icon>
@@ -107,28 +120,35 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "WorkspacesCreate",
   data() {
     return {
       valid: false,
+      token_gas_symbol: "evtx",
+      token_stake_symbol: "stake",
       model: {
-        owner: "string",
-        provider: "string",
-        token_symbol: "string",
-        payload: {
-          binary_path: "string",
-          binary_url: "string",
-          cli_path: "string",
-          daemon_path: "string",
-          docker_image: "string",
-        },
+        owner: "",
+        provider: "",
+        token_symbol: "DROPS",
+        // payload: {
+        //   binary_path: "string",
+        //   binary_url: "string",
+        //   cli_path: "string",
+        //   daemon_path: "string",
+        //   docker_image: "string",
+        // },
         genesis_accounts: [
           {
-            name: "Genesis Account #1",
-            genesis_balance: "10000",
+            name: "alice@apeunit.com",
+            genesis_balance:
+              "`500${model.token_symbol},1000000evtx,100000000stake`",
             faucet: true,
             validator: true,
+            _amount_token: 500,
+            _amount_gas: 1000000,
+            _amount_stake: 100000000,
           },
         ],
       },
@@ -136,14 +156,22 @@ export default {
   },
   methods: {
     submit() {
-      this.createEvent(this.model);
+      this.model.genesis_accounts = this.model.genesis_accounts.map((ga) => {
+        ga.genesis_accounts = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
+        return ga;
+      });
+      console.log(this.model);
+      //this.createEvent(this.model);
     },
     addGenesis() {
       this.model.genesis_accounts.push({
-        name: `Genesis Account #${this.model.genesis_accounts.length + 1}`,
-        genesis_balance: "1000",
+        name: `Account #${this.model.genesis_accounts.length + 1}`,
+        genesis_balance: "",
         validator: true,
         faucet: true,
+        _amount_token: 500,
+        _amount_gas: 1000000,
+        _amount_stake: 100000000,
       });
     },
     removeGenesis(n) {
