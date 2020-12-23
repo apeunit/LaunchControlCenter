@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Cookies from 'js-cookie'
+import router from '../router'
 
 const AUTH_TOKEN_COOKIE_NAME = process.env.VUE_APP_AUTH_TOKEN_COOKIE_NAME
 const AUTH_NAME_COOKIE_NAME = process.env.VUE_APP_AUTH_NAME_COOKIE_NAME
@@ -67,6 +68,7 @@ export default new Vuex.Store({
           console.log(data.message)
           commit("SET_AUTH_TOKEN", data.message)
           commit("SET_AUTH_NAME", payload.email)
+          if (data.code == 200) { router.push("Events") }
         })
         .catch(e => {
           console.log(e)
@@ -102,6 +104,11 @@ export default new Vuex.Store({
         .then(data => {
           console.log(data)
           commit("SET_STATUS", data)
+          if (data.code == 200) {
+            router.push("Login")
+            return
+          }
+          confirm("Sorry, an user already exists with this email")
         })
         .catch(e => {
           console.log(e)
