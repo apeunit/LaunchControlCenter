@@ -62,9 +62,27 @@
         <p>
           Deploy can not be undone.
         </p>
+        <v-alert
+          v-if="deployError"
+          text
+          prominent
+          type="error"
+          border="right"
+          icon="mdi-cloud-alert"
+        >
+          <h3>Error</h3>
+          <p>
+           {{deployError}}
+          </p>
+          <p>
+           Please try to deploy again.
+          </p>
+        </v-alert>
         <v-btn
           @click="deploy"
           dark
+          :loading="loading"
+          :disabled="loading"
           color="green"
         >
           Deploy
@@ -94,6 +112,7 @@ export default {
   data () {
     return {
       tab: null,
+      deployError: null,
       items: [
         'Settings',
         'Deploy',
@@ -109,17 +128,28 @@ export default {
       return this.events.filter(e=>e.id===this.id)[0]
     },
     ...mapState([
-      'events'
+      'events',
+      'loading'
     ])
   },
   methods: {
     destroy() {
       if(confirm('Are you sure you want to delete this event?'))
         this.deleteEvent(this.id)
+          .then(() => {
+            this.$router.replace('/events/')
+          })
     },
     deploy() {
       if(confirm('Are you sure you want to deploy this event?'))
         this.deployEvent(this.id)
+          .then(result => {
+            if(typeof result.code !== 'undefined') {
+              if(result.code === 500) {
+                this.deployError = result.message
+              }
+            }
+          })
     },
     ...mapActions([
       'loadEvent',
