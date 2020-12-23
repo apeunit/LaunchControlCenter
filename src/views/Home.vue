@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <h1>home page</h1>
+    <h1>Launch Control Center</h1>
+    <p>
+      Deploy zones easily with a multi-node setup!
+    </p>
   </div>
 </template>
 

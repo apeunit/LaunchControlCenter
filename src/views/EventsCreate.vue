@@ -17,6 +17,9 @@
                 label="Owner Email"
               ></v-text-field> -->
               <!-- <v-text-field
+              ></v-text-field>
+              <v-text-field
+                v-if='false'
                 v-model="model.provider"
                 label="Provider"
               ></v-text-field> -->
@@ -25,8 +28,11 @@
         </v-container>
       </v-card-text>
     </v-card>
-    <v-card class="my-4">
-      <!-- <v-card-title>Event Payload</v-card-title>
+    <v-card
+      class="my-4"
+      v-if='false'
+    >
+      <v-card-title>Event Payload</v-card-title>
       <v-card-text>
         <v-container>
           <v-row justify="space-between">
@@ -54,7 +60,7 @@
             </v-col>
           </v-row>
         </v-container>
-      </v-card-text> -->
+      </v-card-text>
     </v-card>
 
     <h2>Event Genesis Accounts</h2>
@@ -114,13 +120,16 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <v-btn elevation="2" type="submit" class="my-6">Save Event</v-btn>
+    <v-btn
+      elevation="2"
+      type="submit"
+      class="my-6"
+      :loading="loading"
+    >Save Event</v-btn>
   </v-form>
 </template>
 <script>
-import { mapActions } from "vuex";
-
+import {mapState, mapActions} from 'vuex'
 export default {
   name: "WorkspacesCreate",
   data() {
@@ -153,13 +162,23 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState([
+      'authName',
+      'loading'
+    ])
+  },
   methods: {
     submit() {
       this.model.genesis_accounts = this.model.genesis_accounts.map((ga) => {
         ga.genesis_balance = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
         return ga;
       });
-      this.createEvent(this.model).then(this.$router.push({ path: "/events" }));
+      this.createEvent(this.model)
+        .then(result =>{
+          console.log(result)
+          this.$router.replace('/events/')
+        })
     },
     addGenesis() {
       this.model.genesis_accounts.push({
@@ -175,7 +194,12 @@ export default {
     removeGenesis(n) {
       this.$delete(this.model.genesis_accounts, n);
     },
-    ...mapActions(["createEvent"]),
+    ...mapActions([
+      'createEvent'
+    ])
   },
-};
+  mounted() {
+    this.model.owner = this.authName
+  }
+}
 </script>
