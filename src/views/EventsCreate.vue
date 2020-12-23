@@ -142,8 +142,7 @@ export default {
         genesis_accounts: [
           {
             name: "alice@apeunit.com",
-            genesis_balance:
-              "`500${model.token_symbol},1000000evtx,100000000stake`",
+            genesis_balance: "",
             faucet: true,
             validator: true,
             _amount_token: 500,
@@ -157,7 +156,7 @@ export default {
   methods: {
     submit() {
       this.model.genesis_accounts = this.model.genesis_accounts.map((ga) => {
-        ga.genesis_accounts = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
+        ga.genesis_balance = `${ga._amount_token}${this.model.token_symbol},${ga._amount_gas}${this.token_gas_symbol},${ga._amount_stake}${this.token_stake_symbol}`;
         return ga;
       });
       this.createEvent(this.model).then(this.$router.push({ path: "/events" }));
