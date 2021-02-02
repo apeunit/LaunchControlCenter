@@ -93,16 +93,20 @@
                 :suffix="`${token_stake_symbol}`"
                 hint="stake assigned to the account"
               ></v-text-field>
+                <v-sheet class="pa-5">
               <v-switch
                 v-model="g.faucet"
+                inset
                 :label="`Is Faucet`"
                 hint="a faucet service will be connected to this account"
               ></v-switch>
               <v-switch
                 v-model="g.validator"
+                inset
                 :label="`Is validator`"
                 hint="the account will be a validator"
               ></v-switch>
+                </v-sheet>
               <v-btn @click="removeGenesis(n)" class="mx-2" dark color="red">
                 <v-icon dark> mdi-minus </v-icon>
                 remove
