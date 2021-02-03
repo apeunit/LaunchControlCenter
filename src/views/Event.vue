@@ -1,6 +1,9 @@
 <template>
   <v-card>
-    <v-toolbar color="indigo" dark flat>
+    <v-toolbar 
+          outlined
+          tile  
+          color="darkolivegreen" dark flat>
       <v-toolbar-title>
         <h3>Event: {{ id }}</h3>
       </v-toolbar-title>
@@ -14,7 +17,7 @@
       </template>
     </v-toolbar>
     <v-tabs-items v-model="tab">
-      <v-tab-item class="pa-4">
+      <v-tab-item class="ma-4 pa-4">
         <h2>Settings</h2>
         <v-simple-table>
           <template v-slot:default>
@@ -47,15 +50,15 @@
               </tr>
               <tr>
                 <td>created on</td>
-                <td>{{event.created_on}}</td>
+                <td>{{event.created_on | luxon }}</td>
               </tr>
               <tr>
                 <td>starts on</td>
-                <td>{{event.starts_on}}</td>
+                <td>{{event.starts_on | luxon }}</td>
               </tr>
               <tr>
                 <td>ends on</td>
-                <td>{{event.ends_on}}</td>
+                <td>{{event.ends_on | luxon }}</td>
               </tr>
             </tbody>
           </template>
@@ -69,7 +72,7 @@
           v-for="a in event.accounts"
           :key="a.name"
         >
-          <v-card-title>
+        <v-card-title>
             {{a.name}}
           </v-card-title>
           <v-card-text>
@@ -96,15 +99,35 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab-item class="pa-4">
-        <h2>Deploy</h2>
+      <v-tab-item class="ma-4 pa-4">
+        <h2 class="pb-4">Deploy your event here</h2>
         <p>
           Deploy can not be undone. 
         </p>
         <p>
-          Deploy can take a up to 30 seconds.
+          The operation can take a up to 30 seconds.
         </p>
-        <v-alert
+     <v-dialog 
+      v-if="deployError"
+      v-model="errorDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          Error
+        </v-card-title>
+        <v-card-text>
+          {{deployError}}
+        </v-card-text>
+           <v-card-text>
+        Please try to deploy again.
+          </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+        <!-- <v-alert
           v-if="deployError"
           text
           prominent
@@ -119,21 +142,98 @@
           <p>
            Please try to deploy again.
           </p>
-        </v-alert>
-        <v-btn
+        </v-alert> -->
+        <!-- <v-btn
           @click="deploy"
           dark
           :loading="loading"
           color="green"
         >
           Deploy
-        </v-btn>
+        </v-btn> -->
+
+        <v-btn @click.stop="deployDialog = true"  
+        outlined
+        tile 
+        dark color="green"> Deploy </v-btn>
+         <v-dialog
+      v-model="deployDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          You are about to <br>deploy this event.
+        </v-card-title>
+        <v-card-text>
+          Are you sure you want to proceed?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="deployDialog = false"
+          >
+            No
+          </v-btn>
+
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="deploy"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
       </v-tab-item>
 
-      <v-tab-item class="pa-4">
-        <h2>Delete</h2>
+      <v-tab-item class="ma-4 pa-4">
+        <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
-        <v-btn @click="destroy" dark color="red"> Delete </v-btn>
+        <!-- <v-btn @click="destroy" dark color="red"> Delete </v-btn> -->
+        <v-btn @click.stop="deleteDialog = true"            
+            outlined 
+            tile 
+            dark 
+            color="red"> Delete </v-btn>
+         <v-dialog
+      v-model="deleteDialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">
+          You are deleting <br>this event.
+        </v-card-title>
+        <v-card-text>
+          Are you sure you want to proceed?
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="blue darken-1"
+            tile
+            @click="deleteDialog = false"
+          >
+            No
+          </v-btn>
+
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="destroy"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
       </v-tab-item>
     </v-tabs-items>
   </v-card>
@@ -151,6 +251,9 @@ export default {
         'Deploy',
         'Delete'
       ],
+       deployDialog: false,
+       deleteDialog: false,
+       errorDialog: false
     }
   },
   computed: {
@@ -167,23 +270,29 @@ export default {
   },
   methods: {
     destroy() {
-      if(confirm('Are you sure you want to delete this event?'))
+      // if(confirm('Are you sure you want to delete this event?'))
         this.deleteEvent(this.id)
           .then(() => {
             this.$router.replace('/events/')
+            this.dialog = false
           })
     },
     deploy() {
-      if(confirm('Are you sure you want to deploy this event?'))
+      // if(confirm('Are you sure you want to deploy this event?'))
         this.deployEvent(this.id)
           .then(result => {
             if(typeof result.code !== 'undefined') {
               if(result.code === 500) {
                 this.deployError = result.message
+                this.errorDialog = true
               }
             }
+           this.deployDialog = false
           })
     },
+    // luxon() {
+    //   this.$luxon("dd-MM-yyyy")
+    // },
     ...mapActions(["loadEvent", "deleteEvent", "deployEvent"]),
   },
   mounted() {

@@ -1,7 +1,17 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
+    <v-container class="d-flex justify-space-between align-center">
     <h1>Create Event</h1>
-    <v-card class="my-4">
+       <v-btn
+      elevation="2"
+      type="submit"
+      class="my-6 d-flex justify-end"
+       outlined
+        tile
+      :loading="loading"
+    >Save Event</v-btn>
+     </v-container>
+    <v-card class="my-4 pa-6">
       <v-card-title>Event</v-card-title>
       <v-card-text>
         <v-container>
@@ -63,8 +73,20 @@
       </v-card-text>
     </v-card>
 
-    <h2>Event Genesis Accounts</h2>
+    <!-- <h2>Event Genesis Accounts</h2> -->
     <v-container>
+          <v-row>
+        <v-col cols="12" md="4">
+          <v-btn @click="addGenesis()" 
+          class="mx-2" 
+          outlined
+          tile 
+          dark color="indigo">
+            <v-icon dark> mdi-plus </v-icon>
+            add genesis account
+          </v-btn>
+        </v-col>
+      </v-row>
       <v-row>
         <v-col
           cols="12"
@@ -72,22 +94,28 @@
           v-for="(g, n) in model.genesis_accounts"
           :key="n"
         >
-          <v-card>
+          <v-card class="pa-6">
             <v-card-text>
-              <v-text-field v-model="g.name" label="E-Mail"></v-text-field>
+              <h3 class="pt-2 pb-8">Event Genesis Account</h3>
+
+              <v-text-field v-model="g.name" label="E-Mail"                 
+              class="py-4"></v-text-field>
               <v-text-field
+                class="py-4"
                 hint="Main token balance"
                 v-model="g._amount_token"
                 :suffix="`${model.token_symbol}`"
                 label="Genesis Token Balance"
               ></v-text-field>
               <v-text-field
+                class="py-4"
                 v-model="g._amount_gas"
                 label="Gas Token Balance"
                 :suffix="`${token_gas_symbol}`"
                 hint="balance for tokens used to pay for gas"
               ></v-text-field>
               <v-text-field
+                class="py-4"
                 v-model="g._amount_stake"
                 label="Stake"
                 :suffix="`${token_stake_symbol}`"
@@ -107,7 +135,10 @@
                 hint="the account will be a validator"
               ></v-switch>
                 </v-sheet>
-              <v-btn @click="removeGenesis(n)" class="mx-2" dark color="red">
+              <v-btn @click="removeGenesis(n)" 
+              outlined
+              tile 
+              class="mx-2" justify="center" dark color="red">
                 <v-icon dark> mdi-minus </v-icon>
                 remove
               </v-btn>
@@ -115,21 +146,21 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-row>
+      <!-- <v-row>
         <v-col cols="12" md="4">
           <v-btn @click="addGenesis()" class="mx-2" dark color="indigo">
             <v-icon dark> mdi-plus </v-icon>
             add genesis account
           </v-btn>
         </v-col>
-      </v-row>
+      </v-row> -->
     </v-container>
-    <v-btn
+    <!-- <v-btn
       elevation="2"
       type="submit"
       class="my-6"
       :loading="loading"
-    >Save Event</v-btn>
+    >Save Event</v-btn> -->
   </v-form>
 </template>
 <script>
