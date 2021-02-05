@@ -9,6 +9,7 @@ import VueLuxon from 'vue-luxon';
 
 Vue.config.productionTip = false
 Vue.use(VueLuxon);
+
 new Vue({
   router,
   store,

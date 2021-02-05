@@ -90,7 +90,8 @@
                 </thead>
                 <tbody>
                   <tr><td>address</td><td>{{a.address}}</td></tr>
-                  <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr>
+                  <!-- <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr> -->
+                  <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
                   <tr><td>validator</td><td>{{a.validator}}</td></tr>
                   <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
               </tbody>
@@ -253,7 +254,7 @@ export default {
       ],
        deployDialog: false,
        deleteDialog: false,
-       errorDialog: false
+       errorDialog: false,
     }
   },
   computed: {
@@ -263,6 +264,19 @@ export default {
     event() {
       return this.events.filter((e) => e.id === this.id)[0]
     },
+    
+    accountsSel() {
+      const a = Object.values(this.event.accounts)[0]
+      const b = Object.values(a)[2].match(/\d+[a-z]+/ig).map(m => { return { 
+     val: m.match(/\d+/)[0],
+     sym: m.match(/\D+/)[0],
+ }
+})   
+      const z = b.map(u => Object.values(u))
+      const y = z.map(i => i.join(" ")).toString()
+      return y
+ },
+
     ...mapState([
       'events',
       'loading'
@@ -290,9 +304,6 @@ export default {
            this.deployDialog = false
           })
     },
-    // luxon() {
-    //   this.$luxon("dd-MM-yyyy")
-    // },
     ...mapActions(["loadEvent", "deleteEvent", "deployEvent"]),
   },
   mounted() {
