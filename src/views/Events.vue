@@ -20,14 +20,17 @@
             v-for='event in events'
             :key='event.id'
           >
-            <v-card-title class="pb-8">
+            <v-card-title class="pb-6">
               Token Symbol: {{event.token_symbol}}
             </v-card-title>
-            <v-card-subtitle>
+            <!-- <v-card-subtitle>
               {{event.id}}
-            </v-card-subtitle>
-            <v-card-text>
-              Starts on: {{event.starts_on}}
+            </v-card-subtitle> -->
+            <v-card-text class="pb-1">
+              Starts on: {{event.starts_on | luxon}}
+            </v-card-text>
+            <v-card-text class="pb-6">
+              Ends on: {{event.ends_on | luxon}}
             </v-card-text>
             <v-card-actions>
               <v-btn
