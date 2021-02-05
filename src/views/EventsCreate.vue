@@ -1,7 +1,11 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
-    <v-container class="d-flex justify-space-between align-center">
+    <!-- <v-container class="d-flex justify-space-between align-center"> -->
+      <v-container class="d-flex align-center">
+     <v-container class="d-flex justify-start">
     <h1>Create Event</h1>
+      </v-container>
+       <v-container class="d-flex justify-end">
        <v-btn
       elevation="2"
       type="submit"
@@ -10,6 +14,16 @@
         tile
       :loading="loading"
     >Save Event</v-btn>
+    <v-btn
+    @click.prevent="cancel" 
+      elevation="2"
+      type="submit"
+      class="my-6 d-flex justify-end"
+       outlined
+        tile
+      :loading="loading"
+    >Cancel</v-btn>
+     </v-container>
      </v-container>
     <v-card class="my-4 pa-6">
       <v-card-title>Event</v-card-title>
@@ -81,6 +95,7 @@
           class="mx-2" 
           outlined
           tile 
+           elevation="2"
           dark color="indigo">
             <v-icon dark> mdi-plus </v-icon>
             add genesis account
@@ -96,9 +111,11 @@
         >
           <v-card class="pa-6">
             <v-card-text>
-              <h3 class="pt-2 pb-8">Event Genesis Account</h3>
+              <!-- <h3 class="pt-2 pb-8">Genesis Account</h3> -->
+              <!-- <h3 class="pt-2 pb-8">{{event}}</h3> -->
+              <!-- <v-text-field v-model="g.name" label="E-Mail"   -->
 
-              <v-text-field v-model="g.name" label="E-Mail"                 
+              <v-text-field v-model="model.owner" label="E-Mail"                 
               class="py-4"></v-text-field>
               <v-text-field
                 class="py-4"
@@ -173,7 +190,7 @@ export default {
       token_gas_symbol: "evtx",
       token_stake_symbol: "stake",
       model: {
-        // owner: "",
+        owner: "",
         // provider: "",
         token_symbol: "DROPS",
         // payload: {
@@ -185,7 +202,8 @@ export default {
         // },
         genesis_accounts: [
           {
-            name: "alice@apeunit.com",
+            // name: "alice@apeunit.com",
+            name: "",
             genesis_balance: "",
             faucet: true,
             validator: true,
@@ -198,6 +216,14 @@ export default {
     };
   },
   computed: {
+      event() {
+      return this.events.filter((e) => e.id === this.id)[0]
+    },
+
+    accountName() {
+      console.log(this.model.owner) ;
+      return this.model.owner;
+    },
     ...mapState([
       'authName',
       'loading'
@@ -215,6 +241,9 @@ export default {
           this.$router.replace('/events/')
         })
     },
+    cancel(){
+      this.$router.replace('/events/')
+    },
     addGenesis() {
       this.model.genesis_accounts.push({
         name: `Account #${this.model.genesis_accounts.length + 1}`,
@@ -225,6 +254,10 @@ export default {
         _amount_gas: 1000000,
         _amount_stake: 100000000,
       });
+      this.model.owner.push(`Account #${this.model.genesis_accounts.length + 1}`)
+      console.log('model owner', this.model.owner)
+      console.log('model genesis accounts', this.model.genesis_accounts)
+
     },
     removeGenesis(n) {
       this.$delete(this.model.genesis_accounts, n);
