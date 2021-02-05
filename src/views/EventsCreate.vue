@@ -9,7 +9,7 @@
        <v-btn
       elevation="2"
       type="submit"
-      class="my-6 d-flex justify-end"
+      class="my-6 d-flex justify-end mr-2"
        outlined
         tile
       :loading="loading"
@@ -25,7 +25,7 @@
     >Cancel</v-btn>
      </v-container>
      </v-container>
-    <v-card class="my-4 pa-6">
+    <v-card class="mb-4 pa-6">
       <v-card-title>Event</v-card-title>
       <v-card-text>
         <v-container>
@@ -111,8 +111,7 @@
         >
           <v-card class="pa-6">
             <v-card-text>
-              <!-- <h3 class="pt-2 pb-8">Genesis Account</h3> -->
-              <!-- <h3 class="pt-2 pb-8">{{event}}</h3> -->
+              <h3 class="pt-2 pb-8">Genesis Account</h3>
               <!-- <v-text-field v-model="g.name" label="E-Mail"   -->
 
               <v-text-field v-model="model.owner" label="E-Mail"                 
@@ -155,7 +154,8 @@
               <v-btn @click="removeGenesis(n)" 
               outlined
               tile 
-              class="mx-2" justify="center" dark color="red">
+               elevation="2"
+              class="mx-2" justify="center" dark color="red" >
                 <v-icon dark> mdi-minus </v-icon>
                 remove
               </v-btn>

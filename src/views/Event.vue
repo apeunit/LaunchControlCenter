@@ -16,9 +16,9 @@
         </v-tabs>
       </template>
     </v-toolbar>
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab"> 
       <v-tab-item class="ma-4 pa-4">
-        <h2>Settings</h2>
+         <h2>Settings</h2>
         <v-simple-table>
           <template v-slot:default>
             <thead>
@@ -63,9 +63,46 @@
             </tbody>
           </template>
         </v-simple-table>
-
-        <h2>Accounts:</h2>
-
+       <!-- <v-simple-table> -->
+        <!-- <v-card
+          class="my-4"
+          elevation="6"
+          v-for="a in event.accounts"
+          :key="a.name"
+        >
+        <v-card-title>
+           <h2>Account: {{a.name}}</h2>
+          </v-card-title>
+          <v-card-title>
+            {{a.name}}
+          </v-card-title> -->
+          <!-- <v-card-text>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th class="text-left">
+                      Name
+                    </th>
+                    <th class="text-left">
+                      Value
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>address</td><td>{{a.address}}</td></tr> -->
+                  <!-- <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr> -->
+                  <!-- <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
+                  <tr><td>validator</td><td>{{a.validator}}</td></tr>
+                  <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
+              </tbody>
+            </template>
+          </v-simple-table>
+          </v-card-text>
+        </v-card> --> 
+    </v-tab-item>
+    <v-tab-item class="ma-4 pa-4">
+       <h2>Accounts:</h2>
         <v-card
           class="my-4"
           elevation="6"
@@ -73,8 +110,11 @@
           :key="a.name"
         >
         <v-card-title>
-            {{a.name}}
+           {{a.name}}
           </v-card-title>
+        <!-- <v-card-title>
+            {{a.name}}
+          </v-card-title> -->
           <v-card-text>
             <v-simple-table>
               <template v-slot:default>
@@ -99,7 +139,7 @@
           </v-simple-table>
           </v-card-text>
         </v-card>
-      </v-tab-item>
+        </v-tab-item>
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Deploy your event here</h2>
         <p>
@@ -237,7 +277,10 @@
     </v-dialog>
       </v-tab-item>
     </v-tabs-items>
+       
   </v-card>
+
+      
 </template>
 <script>
 import { mapActions, mapState } from "vuex"
@@ -249,6 +292,7 @@ export default {
       deployError: null,
       items: [
         'Settings',
+        'Accounts',
         'Deploy',
         'Delete'
       ],
