@@ -4,8 +4,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false
+
+Sentry.init({
+  Vue,
+  dsn: "https://b48788ea342e49b59ab9611277803f86@o413394.ingest.sentry.io/5627706",
+  integrations: [new Integrations.BrowserTracing()],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 1.0,
+});
 
 new Vue({
   router,
