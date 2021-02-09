@@ -1,6 +1,5 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
-    <!-- <v-container class="d-flex justify-space-between align-center"> -->
       <v-container class="d-flex align-center">
      <v-container class="d-flex justify-start">
     <h1>Create Event</h1>

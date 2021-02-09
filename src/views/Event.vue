@@ -63,48 +63,13 @@
             </tbody>
           </template>
         </v-simple-table>
-       <!-- <v-simple-table> -->
-        <!-- <v-card
-          class="my-4"
-          elevation="6"
-          v-for="a in event.accounts"
-          :key="a.name"
-        >
-        <v-card-title>
-           <h2>Account: {{a.name}}</h2>
-          </v-card-title>
-          <v-card-title>
-            {{a.name}}
-          </v-card-title> -->
-          <!-- <v-card-text>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">
-                      Name
-                    </th>
-                    <th class="text-left">
-                      Value
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>address</td><td>{{a.address}}</td></tr> -->
-                  <!-- <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr> -->
-                  <!-- <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
-                  <tr><td>validator</td><td>{{a.validator}}</td></tr>
-                  <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
-              </tbody>
-            </template>
-          </v-simple-table>
-          </v-card-text>
-        </v-card> --> 
     </v-tab-item>
     <v-tab-item class="ma-4 pa-4">
        <h2>Accounts:</h2>
+       <v-container class="d-flex flex-wrap">
         <v-card
-          class="my-4"
+          class="my-4 mx-4"
+          width="25vw"
           elevation="6"
           v-for="a in event.accounts"
           :key="a.name"
@@ -112,9 +77,6 @@
         <v-card-title>
            {{a.name}}
           </v-card-title>
-        <!-- <v-card-title>
-            {{a.name}}
-          </v-card-title> -->
           <v-card-text>
             <v-simple-table>
               <template v-slot:default>
@@ -130,8 +92,9 @@
                 </thead>
                 <tbody>
                   <tr><td>address</td><td>{{a.address}}</td></tr>
-                  <!-- <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr> -->
-                  <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
+                  <tr><td>genesis balance</td><td>{{accountsSel[0].join(" ")}}</td></tr>
+                  <tr><td>gas balance</td><td>{{accountsSel[1].join(" ")}}</td></tr>
+                  <tr><td>stake</td><td>{{accountsSel[2].join(" ")}}</td></tr>
                   <tr><td>validator</td><td>{{a.validator}}</td></tr>
                   <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
               </tbody>
@@ -139,6 +102,7 @@
           </v-simple-table>
           </v-card-text>
         </v-card>
+         </v-container>
         </v-tab-item>
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Deploy your event here</h2>
@@ -168,31 +132,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-        <!-- <v-alert
-          v-if="deployError"
-          text
-          prominent
-          type="error"
-          border="right"
-          icon="mdi-cloud-alert"
-        >
-          <h3>Error</h3>
-          <p>
-           {{deployError}}
-          </p>
-          <p>
-           Please try to deploy again.
-          </p>
-        </v-alert> -->
-        <!-- <v-btn
-          @click="deploy"
-          dark
-          :loading="loading"
-          color="green"
-        >
-          Deploy
-        </v-btn> -->
-
         <v-btn @click.stop="deployDialog = true"  
         outlined
         tile 
@@ -236,7 +175,6 @@
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
-        <!-- <v-btn @click="destroy" dark color="red"> Delete </v-btn> -->
         <v-btn @click.stop="deleteDialog = true"            
             outlined 
             tile 
@@ -310,15 +248,14 @@ export default {
     },
     
     accountsSel() {
-      const a = Object.values(this.event.accounts)[0]
-      const b = Object.values(a)[2].match(/\d+[a-z]+/ig).map(m => { return { 
+      const accountValues = Object.values(this.event.accounts)[0]
+      const valuesObj = Object.values(accountValues)[2].match(/\d+[a-z]+/ig).map(m => { return { 
      val: m.match(/\d+/)[0],
      sym: m.match(/\D+/)[0],
  }
 })   
-      const z = b.map(u => Object.values(u))
-      const y = z.map(i => i.join(" ")).toString()
-      return y
+      const valArr = valuesObj.map(val => Object.values(val))
+      return valArr
  },
 
     ...mapState([
@@ -328,7 +265,6 @@ export default {
   },
   methods: {
     destroy() {
-      // if(confirm('Are you sure you want to delete this event?'))
         this.deleteEvent(this.id)
           .then(() => {
             this.$router.replace('/events/')
@@ -336,7 +272,6 @@ export default {
           })
     },
     deploy() {
-      // if(confirm('Are you sure you want to deploy this event?'))
         this.deployEvent(this.id)
           .then(result => {
             if(typeof result.code !== 'undefined') {
