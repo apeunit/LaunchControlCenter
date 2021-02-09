@@ -22,17 +22,6 @@
                 label="Token Symbol"
                 value="DROPS"
               ></v-text-field>
-              <!-- <v-text-field
-                v-model="model.owner"
-                label="Owner Email"
-              ></v-text-field> -->
-              <!-- <v-text-field
-              ></v-text-field>
-              <v-text-field
-                v-if='false'
-                v-model="model.provider"
-                label="Provider"
-              ></v-text-field> -->
             </v-col>
           </v-row>
         </v-container>
@@ -73,7 +62,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- <h2>Event Genesis Accounts</h2> -->
     <v-container>
           <v-row>
         <v-col cols="12" md="4">
@@ -146,21 +134,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <!-- <v-row>
-        <v-col cols="12" md="4">
-          <v-btn @click="addGenesis()" class="mx-2" dark color="indigo">
-            <v-icon dark> mdi-plus </v-icon>
-            add genesis account
-          </v-btn>
-        </v-col>
-      </v-row> -->
     </v-container>
-    <!-- <v-btn
-      elevation="2"
-      type="submit"
-      class="my-6"
-      :loading="loading"
-    >Save Event</v-btn> -->
   </v-form>
 </template>
 <script>
@@ -173,16 +147,7 @@ export default {
       token_gas_symbol: "evtx",
       token_stake_symbol: "stake",
       model: {
-        // owner: "",
-        // provider: "",
         token_symbol: "DROPS",
-        // payload: {
-        //   binary_path: "string",
-        //   binary_url: "string",
-        //   cli_path: "string",
-        //   daemon_path: "string",
-        //   docker_image: "string",
-        // },
         genesis_accounts: [
           {
             name: "alice@apeunit.com",

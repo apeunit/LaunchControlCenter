@@ -23,9 +23,6 @@
             <v-card-title class="pb-6">
               Token Symbol: {{event.token_symbol}}
             </v-card-title>
-            <!-- <v-card-subtitle>
-              {{event.id}}
-            </v-card-subtitle> -->
             <v-card-text class="pb-1">
               Starts on: {{event.starts_on | luxon}}
             </v-card-text>
@@ -55,19 +52,6 @@
           </p>
           </v-alert>
         </template>
-
-        <!-- <v-btn
-          :to="`/events/create`"
-          class="ma-2"
-          fab
-          dark
-          color="indigo"
-          >
-          <v-icon dark>
-            mdi-plus
-          </v-icon>
-        </v-btn> -->
-
     </v-col>
   </v-row>
 </template>

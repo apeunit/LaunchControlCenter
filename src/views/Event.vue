@@ -90,7 +90,6 @@
                 </thead>
                 <tbody>
                   <tr><td>address</td><td>{{a.address}}</td></tr>
-                  <!-- <tr><td>genesis balance</td><td>{{a.genesis_balance}}</td></tr> -->
                   <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
                   <tr><td>validator</td><td>{{a.validator}}</td></tr>
                   <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
@@ -128,31 +127,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-        <!-- <v-alert
-          v-if="deployError"
-          text
-          prominent
-          type="error"
-          border="right"
-          icon="mdi-cloud-alert"
-        >
-          <h3>Error</h3>
-          <p>
-           {{deployError}}
-          </p>
-          <p>
-           Please try to deploy again.
-          </p>
-        </v-alert> -->
-        <!-- <v-btn
-          @click="deploy"
-          dark
-          :loading="loading"
-          color="green"
-        >
-          Deploy
-        </v-btn> -->
-
         <v-btn @click.stop="deployDialog = true"  
         outlined
         tile 
@@ -196,7 +170,6 @@
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
-        <!-- <v-btn @click="destroy" dark color="red"> Delete </v-btn> -->
         <v-btn @click.stop="deleteDialog = true"            
             outlined 
             tile 
