@@ -58,7 +58,7 @@
               </tr>
               <tr>
                 <td>ends on</td>
-                <td>{{event.ends_on | luxon }}</td>
+                <td>{{event.ends_on | luxon("time") }}</td>
               </tr>
             </tbody>
           </template>
@@ -257,7 +257,6 @@ export default {
   },
   methods: {
     destroy() {
-      // if(confirm('Are you sure you want to delete this event?'))
         this.deleteEvent(this.id)
           .then(() => {
             this.$router.replace('/events/')
@@ -265,7 +264,6 @@ export default {
           })
     },
     deploy() {
-      // if(confirm('Are you sure you want to deploy this event?'))
         this.deployEvent(this.id)
           .then(result => {
             if(typeof result.code !== 'undefined') {

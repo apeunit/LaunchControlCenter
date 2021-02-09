@@ -8,7 +8,21 @@ import VueLuxon from 'vue-luxon';
 
 
 Vue.config.productionTip = false
-Vue.use(VueLuxon);
+
+Vue.use(VueLuxon, {
+    input: {
+        zone: "utc",
+        format: "iso"
+    },
+    output: {
+      format: {
+        year: null,
+        month: 'long',
+        day: 'numeric'
+    }
+    },
+  }
+),
 
 new Vue({
   router,

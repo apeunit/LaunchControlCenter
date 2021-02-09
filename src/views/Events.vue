@@ -27,7 +27,7 @@
               Starts on: {{event.starts_on | luxon}}
             </v-card-text>
             <v-card-text class="pb-6">
-              Ends on: {{event.ends_on | luxon}}
+              Ends on: {{event.ends_on | luxon("time") }}
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -70,8 +70,9 @@ export default {
   methods: {
     ...mapActions([
       'loadEvents'
-      ])
+      ]),
   },
+
   mounted() {
     this.loadEvents()
   }
