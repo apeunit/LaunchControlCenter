@@ -149,15 +149,7 @@ export default {
         //   docker_image: "string",
         // },
         genesis_accounts: [
-          {
-            name: "alice@apeunit.com",
-            genesis_balance: "",
-            faucet: true,
-            validator: true,
-            _amount_token: 500,
-            _amount_gas: 1000000,
-            _amount_stake: 100000000,
-          },
+
         ],
       },
     };
@@ -190,6 +182,8 @@ export default {
         _amount_gas: 1000000,
         _amount_stake: 100000000,
       });
+
+
     },
     removeGenesis(n) {
       this.$delete(this.model.genesis_accounts, n);
@@ -199,6 +193,16 @@ export default {
     ])
   },
   mounted() {
+    this.model.genesis_accounts.push({
+      name: this.authName,
+      genesis_balance: "",
+      faucet: true,
+      validator: true,
+      _amount_token: 500,
+      _amount_gas: 1000000,
+      _amount_stake: 100000000,
+      })
+
     this.model.owner = this.authName
   }
 }
