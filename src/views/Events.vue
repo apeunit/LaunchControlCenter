@@ -29,6 +29,9 @@
             <v-card-text class="pb-6">
               Ends on: {{event.ends_on | luxon("time") }}
             </v-card-text>
+            <!-- <v-card-text class="pb-6">
+              Ends on: {{validEndDate}}
+            </v-card-text> -->
             <v-card-actions>
               <v-btn
               justify-self="space-between"
@@ -65,7 +68,33 @@ export default {
   computed: {
     ...mapState([
       'events'
-    ])
+    ]),
+    //      validEndDate(){
+    // let evnts = this.events;
+    // let evntsId = evnts.id;
+    // let y = evnts.map(event => event.id);
+    // let a = evnts.map(event => event.starts_on);
+    // let b = evnts.map(event => event.ends_on);
+    // // let c = a.map(i => i) > b.map(i => i); 
+       
+    // console.log("evntsId", evntsId);
+    // console.log("a", a);
+    // console.log("b", b);
+    // // console.log("c", c);
+    // console.log("y", y);
+
+
+
+  //   if (a > b) {
+  //     console.log("hello")
+  //   } else {
+  //     console.log("-")
+  //  }
+     
+//    return a;
+
+// } 
+    
   },
   methods: {
     ...mapActions([
