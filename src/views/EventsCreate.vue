@@ -35,17 +35,6 @@
                 label="Token Symbol"
                 value="DROPS"
               ></v-text-field>
-              <!-- <v-text-field
-                v-model="model.owner"
-                label="Owner Email"
-              ></v-text-field> -->
-              <!-- <v-text-field
-              ></v-text-field>
-              <v-text-field
-                v-if='false'
-                v-model="model.provider"
-                label="Provider"
-              ></v-text-field> -->
             </v-col>
           </v-row>
         </v-container>
@@ -86,7 +75,6 @@
       </v-card-text>
     </v-card>
 
-    <!-- <h2>Event Genesis Accounts</h2> -->
     <v-container>
           <v-row>
         <v-col cols="12" md="4">
@@ -111,9 +99,8 @@
           <v-card class="pa-6">
             <v-card-text>
               <h3 class="pt-2 pb-8">Genesis Account</h3>
-              <!-- <v-text-field v-model="g.name" label="E-Mail"   -->
 
-              <v-text-field v-model="model.owner" label="E-Mail"                 
+              <v-text-field v-model="g.name" label="E-Mail"                 
               class="py-4"></v-text-field>
               <v-text-field
                 class="py-4"
@@ -162,21 +149,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <!-- <v-row>
-        <v-col cols="12" md="4">
-          <v-btn @click="addGenesis()" class="mx-2" dark color="indigo">
-            <v-icon dark> mdi-plus </v-icon>
-            add genesis account
-          </v-btn>
-        </v-col>
-      </v-row> -->
     </v-container>
-    <!-- <v-btn
-      elevation="2"
-      type="submit"
-      class="my-6"
-      :loading="loading"
-    >Save Event</v-btn> -->
   </v-form>
 </template>
 <script>
@@ -190,26 +163,8 @@ export default {
       token_stake_symbol: "stake",
       model: {
         owner: "",
-        // provider: "",
-        token_symbol: "DROPS",
-        // payload: {
-        //   binary_path: "string",
-        //   binary_url: "string",
-        //   cli_path: "string",
-        //   daemon_path: "string",
-        //   docker_image: "string",
-        // },
+          token_symbol: "DROPS",
         genesis_accounts: [
-          {
-            // name: "alice@apeunit.com",
-            name: "",
-            genesis_balance: "",
-            faucet: true,
-            validator: true,
-            _amount_token: 500,
-            _amount_gas: 1000000,
-            _amount_stake: 100000000,
-          },
         ],
       },
     };
@@ -253,9 +208,6 @@ export default {
         _amount_gas: 1000000,
         _amount_stake: 100000000,
       });
-      this.model.owner.push(`Account #${this.model.genesis_accounts.length + 1}`)
-      console.log('model owner', this.model.owner)
-      console.log('model genesis accounts', this.model.genesis_accounts)
 
     },
     removeGenesis(n) {
@@ -266,6 +218,16 @@ export default {
     ])
   },
   mounted() {
+      this.model.genesis_accounts.push({
+      name: this.authName,
+      genesis_balance: "",
+      faucet: true,
+      validator: true,
+      _amount_token: 500,
+      _amount_gas: 1000000,
+      _amount_stake: 100000000,
+      })
+
     this.model.owner = this.authName
   }
 }
