@@ -29,9 +29,9 @@
             <v-card-text class="pb-6">
               Ends on: {{event.ends_on | luxon("time") }}
             </v-card-text>
-            <!-- <v-card-text class="pb-6">
-              Ends on: {{validEndDate}}
-            </v-card-text> -->
+            <v-card-text class="pb-6">
+              test: {{validEndDate}}
+            </v-card-text>
             <v-card-actions>
               <v-btn
               justify-self="space-between"
@@ -69,32 +69,37 @@ export default {
     ...mapState([
       'events'
     ]),
-    //      validEndDate(){
-    // let evnts = this.events;
-    // let evntsId = evnts.id;
-    // let y = evnts.map(event => event.id);
-    // let a = evnts.map(event => event.starts_on);
-    // let b = evnts.map(event => event.ends_on);
-    // // let c = a.map(i => i) > b.map(i => i); 
-       
-    // console.log("evntsId", evntsId);
-    // console.log("a", a);
-    // console.log("b", b);
-    // // console.log("c", c);
-    // console.log("y", y);
+    validEndDate() {
+    let startDate = {};
+    console.log("startDate", startDate)
 
+    let endDate = {};
+    console.log("endDate", endDate)
 
+    let evnts = this.events;
+    console.log("evnts", evnts)
+    evnts.forEach(i => startDate[i.id] = i.starts_on)
+    evnts.forEach(i => endDate[i.id] = i.ends_on)
 
-  //   if (a > b) {
-  //     console.log("hello")
-  //   } else {
-  //     console.log("-")
-  //  }
-     
-//    return a;
+    let startVal = Object.values(startDate);
+    let endVal = Object.values(endDate);
+    let startKeys = Object.keys(startDate);
+    let endKeys = Object.keys(endDate);
 
-// } 
-    
+    console.log("values startDate", startVal)
+    console.log("values endDate", endVal)
+    console.log("keys startDate", startKeys)
+    console.log("keys endDate", endKeys)
+
+    let startLoop = startDate.map(i => Object.keys(i));
+    console.log("startLoop", startLoop)
+
+    if (startDate.map(i => Object.keys(i)) > endDate.map(i => Object.keys(i))){
+      return Object.values(endDate);
+    } else {
+      return "-";
+    }   
+  }
   },
   methods: {
     ...mapActions([
