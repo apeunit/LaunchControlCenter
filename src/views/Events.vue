@@ -27,7 +27,7 @@
               Starts on: {{event.starts_on | luxon}}
             </v-card-text>
             <v-card-text class="pb-6">
-              Ends on: {{validEndDate }}
+              Ends on: {{validEndDate}}
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -70,20 +70,16 @@ export default {
     let evnts = this.events;
     let evObjStart = {};
     let evObjEnd = {};
-    let finalStr = ""
+    let endDateStr = ""
    
-    evnts.forEach(i => { evObjStart[i.id] = i.starts_on })
-    console.log("evObjStart", evObjStart)
-    evnts.forEach(i => { evObjEnd[i.id] = i.ends_on })
-    console.log("evObjEnd", evObjEnd)
+    evnts.forEach(evnt => { evObjStart[evnt.id] = evnt.starts_on })
+    evnts.forEach(evnt => { evObjEnd[evnt.id] = evnt.ends_on })
 
    for (let key in evObjStart){
-     finalStr = Object.keys(evObjEnd).includes(key) &&  evObjEnd[key] > evObjStart[key] ? this.$luxon(evObjEnd[key]) : "-";
-     console.log(finalStr)
+     endDateStr = Object.keys(evObjEnd).includes(key) && evObjEnd[key] > evObjStart[key] ? this.$luxon(evObjEnd[key]) : "-";
      }
-      
 
-return finalStr;
+   return endDateStr;
     },
   },
   methods: {
