@@ -58,7 +58,7 @@
               </tr>
               <tr>
                 <td>ends on</td>
-                <td>{{event.ends_on | luxon("time") }}</td>
+                <td>{{validEndDate}}</td>
               </tr>
             </tbody>
           </template>
@@ -249,6 +249,22 @@ export default {
       const y = z.map(i => i.join(" ")).toString()
       return y
  },
+   validEndDate() {
+    let evnts = this.events;
+    let evObjStart = {};
+    let evObjEnd = {};
+    let finalStr = ""
+   
+    evnts.forEach(evnt => { evObjStart[evnt.id] = evnt.starts_on })
+    evnts.forEach(evnt => { evObjEnd[evnt.id] = evnt.ends_on })
+
+   for (let key in evObjStart){
+     finalStr = Object.keys(evObjEnd).includes(key) &&  evObjEnd[key] > evObjStart[key] ? this.$luxon(evObjEnd[key]) : "-";
+     console.log(finalStr)
+     }
+
+   return finalStr;
+    },
 
     ...mapState([
       'events',

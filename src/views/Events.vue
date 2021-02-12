@@ -27,10 +27,7 @@
               Starts on: {{event.starts_on | luxon}}
             </v-card-text>
             <v-card-text class="pb-6">
-              Ends on: {{event.ends_on | luxon("time") }}
-            </v-card-text>
-            <v-card-text class="pb-6">
-              test: {{validEndDate}}
+              Ends on: {{validEndDate }}
             </v-card-text>
             <v-card-actions>
               <v-btn
@@ -70,36 +67,24 @@ export default {
       'events'
     ]),
     validEndDate() {
-    let startDate = {};
-    console.log("startDate", startDate)
-
-    let endDate = {};
-    console.log("endDate", endDate)
-
     let evnts = this.events;
-    console.log("evnts", evnts)
-    evnts.forEach(i => startDate[i.id] = i.starts_on)
-    evnts.forEach(i => endDate[i.id] = i.ends_on)
+    let evObjStart = {};
+    let evObjEnd = {};
+    let finalStr = ""
+   
+    evnts.forEach(i => { evObjStart[i.id] = i.starts_on })
+    console.log("evObjStart", evObjStart)
+    evnts.forEach(i => { evObjEnd[i.id] = i.ends_on })
+    console.log("evObjEnd", evObjEnd)
 
-    let startVal = Object.values(startDate);
-    let endVal = Object.values(endDate);
-    let startKeys = Object.keys(startDate);
-    let endKeys = Object.keys(endDate);
+   for (let key in evObjStart){
+     finalStr = Object.keys(evObjEnd).includes(key) &&  evObjEnd[key] > evObjStart[key] ? this.$luxon(evObjEnd[key]) : "-";
+     console.log(finalStr)
+     }
+      
 
-    console.log("values startDate", startVal)
-    console.log("values endDate", endVal)
-    console.log("keys startDate", startKeys)
-    console.log("keys endDate", endKeys)
-
-    let startLoop = startDate.map(i => Object.keys(i));
-    console.log("startLoop", startLoop)
-
-    if (startDate.map(i => Object.keys(i)) > endDate.map(i => Object.keys(i))){
-      return Object.values(endDate);
-    } else {
-      return "-";
-    }   
-  }
+return finalStr;
+    },
   },
   methods: {
     ...mapActions([
