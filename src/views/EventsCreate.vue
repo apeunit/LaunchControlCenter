@@ -16,6 +16,7 @@
          type="submit"
          class="my-6 d-flex justify-end mr-2"
          outlined
+         color="green darken-2"
          :loading="loading"
          >Save Event</v-btn>
         
@@ -25,6 +26,7 @@
           elevation="2"
           class="my-6 d-flex justify-end"
           outlined
+          color="blue-grey"
         >
           Cancel
         </v-btn>
@@ -117,11 +119,9 @@
     </v-card>
     </v-sheet>
     <v-container class="border">
+      <v-card class="pa-6">
       <v-row class="border">
         <v-col cols="12" md="12">
-          <v-card 
-          class="pa-6 border"
-          elevation="2">
           <v-card-title>Genesis Accounts</v-card-title>
          <p class="px-5 pb-2 border">
           Genesis accounts can control the event infrastructure. 
@@ -137,7 +137,6 @@
             <v-icon dark> mdi-plus </v-icon>
             additional genesis account
           </v-btn>
-          </v-card>
         </v-col>
       </v-row>
       <v-row>
@@ -147,9 +146,8 @@
           v-for="(g, n) in model.genesis_accounts"
           :key="n"
         >
-        <v-sheet rounded elevation="2">
-          <v-expansion-panels class="mb-4">
-           <v-card class="pa-6 border">
+        <v-sheet rounded elevation="2" class="ma-4">
+          <v-expansion-panels class="mb-4 pa-8">
            <v-card-text class="black--text">
               <h3 class="pt-2">New Genesis Account</h3>
               <p class="py-4">
@@ -164,7 +162,7 @@
                 label="Genesis Token Balance"
               ></v-text-field>
             <v-expansion-panel class="mb-6 border-none rounded-lg">
-          <v-expansion-panel-header>Further options</v-expansion-panel-header>
+          <v-expansion-panel-header>Advanced Settings</v-expansion-panel-header>
         <v-expansion-panel-content>
            <v-text-field
                class="py-4"
@@ -205,12 +203,12 @@
                 remove
            </v-btn>
          </v-card-text>
-         </v-card>
+         <!-- </v-card> -->
         </v-expansion-panels>
         </v-sheet>
         </v-col>
       </v-row>
-      <!-- </v-card> -->
+      </v-card>
     </v-container>  
   </v-form>
 </template>
