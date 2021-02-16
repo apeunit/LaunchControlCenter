@@ -11,6 +11,21 @@ import { Integrations } from "@sentry/tracing";
 Vue.config.productionTip = false
 Vue.use(VueLuxon);
 
+Vue.use(VueLuxon, {
+    input: {
+        zone: "utc",
+        format: "iso"
+    },
+    output: {
+      format: {
+        year: null,
+        month: 'long',
+        day: 'numeric'
+    }
+    },
+  }
+),
+
 Sentry.init({
   Vue,
   dsn: "https://b48788ea342e49b59ab9611277803f86@o413394.ingest.sentry.io/5627706",

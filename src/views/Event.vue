@@ -16,9 +16,9 @@
         </v-tabs>
       </template>
     </v-toolbar>
-    <v-tabs-items v-model="tab"> 
+    <v-tabs-items v-model="tab">
       <v-tab-item class="ma-4 pa-4">
-         <h2>Settings</h2>
+        <h2>Settings</h2>
         <v-simple-table>
           <template v-slot:default>
             <thead>
@@ -58,7 +58,7 @@
               </tr>
               <tr>
                 <td>ends on</td>
-                <td>{{event.ends_on | luxon }}</td>
+                <td>{{validEndDate}}</td>
               </tr>
             </tbody>
           </template>
@@ -75,7 +75,7 @@
           :key="a.name"
         >
         <v-card-title>
-           {{a.name}}
+            {{a.name}}
           </v-card-title>
           <v-card-text>
             <v-simple-table>
@@ -92,9 +92,7 @@
                 </thead>
                 <tbody>
                   <tr><td>address</td><td>{{a.address}}</td></tr>
-                  <tr><td>genesis balance</td><td>{{accountsSel[0].join(" ")}}</td></tr>
-                  <tr><td>gas balance</td><td>{{accountsSel[1].join(" ")}}</td></tr>
-                  <tr><td>stake</td><td>{{accountsSel[2].join(" ")}}</td></tr>
+                  <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
                   <tr><td>validator</td><td>{{a.validator}}</td></tr>
                   <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
               </tbody>
@@ -102,8 +100,7 @@
           </v-simple-table>
           </v-card-text>
         </v-card>
-         </v-container>
-        </v-tab-item>
+      </v-tab-item>
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Deploy your event here</h2>
         <p>
@@ -169,9 +166,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
       </v-tab-item>
-
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
@@ -191,10 +186,8 @@
         <v-card-text>
           Are you sure you want to proceed?
         </v-card-text>
-
         <v-card-actions>
           <v-spacer></v-spacer>
-
           <v-btn
             color="blue darken-1"
             tile
@@ -214,11 +207,8 @@
       </v-card>
     </v-dialog>
       </v-tab-item>
-    </v-tabs-items>
-       
+    </v-tabs-items>       
   </v-card>
-
-      
 </template>
 <script>
 import { mapActions, mapState } from "vuex"
@@ -248,15 +238,32 @@ export default {
     },
     
     accountsSel() {
-      const accountValues = Object.values(this.event.accounts)[0]
-      const valuesObj = Object.values(accountValues)[2].match(/\d+[a-z]+/ig).map(m => { return { 
+      const a = Object.values(this.event.accounts)[0]
+      const b = Object.values(a)[2].match(/\d+[a-z]+/ig).map(m => { return { 
      val: m.match(/\d+/)[0],
      sym: m.match(/\D+/)[0],
  }
 })   
-      const valArr = valuesObj.map(val => Object.values(val))
-      return valArr
+      const z = b.map(u => Object.values(u))
+      const y = z.map(i => i.join(" ")).toString()
+      return y
  },
+   validEndDate() {
+    let evnts = this.events;
+    let evObjStart = {};
+    let evObjEnd = {};
+    let finalStr = ""
+   
+    evnts.forEach(evnt => { evObjStart[evnt.id] = evnt.starts_on })
+    evnts.forEach(evnt => { evObjEnd[evnt.id] = evnt.ends_on })
+
+   for (let key in evObjStart){
+     finalStr = Object.keys(evObjEnd).includes(key) &&  evObjEnd[key] > evObjStart[key] ? this.$luxon(evObjEnd[key]) : "-";
+     console.log(finalStr)
+     }
+
+   return finalStr;
+    },
 
     ...mapState([
       'events',

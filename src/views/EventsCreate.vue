@@ -1,30 +1,17 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
-      <v-container class="d-flex align-center">
-     <v-container class="d-flex justify-start">
+    <v-container class="d-flex justify-space-between align-center">
     <h1>Create Event</h1>
-      </v-container>
-       <v-container class="d-flex justify-end">
        <v-btn
-      elevation="2"
-      type="submit"
-      class="my-6 d-flex justify-end mr-2"
-       outlined
-        tile
-      :loading="loading"
-    >Save Event</v-btn>
-    <v-btn
-    @click.prevent="cancel" 
       elevation="2"
       type="submit"
       class="my-6 d-flex justify-end"
        outlined
         tile
       :loading="loading"
-    >Cancel</v-btn>
+    >Save Event</v-btn>
      </v-container>
-     </v-container>
-    <v-card class="mb-4 pa-6">
+    <v-card class="my-4 pa-6">
       <v-card-title>Event</v-card-title>
       <v-card-text>
         <v-container>
@@ -82,7 +69,6 @@
           class="mx-2" 
           outlined
           tile 
-           elevation="2"
           dark color="indigo">
             <v-icon dark> mdi-plus </v-icon>
             add genesis account
@@ -98,8 +84,7 @@
         >
           <v-card class="pa-6">
             <v-card-text>
-              <h3 class="pt-2 pb-8">Genesis Account</h3>
-
+              <h3 class="pt-2 pb-8">Event Genesis Account</h3>
               <v-text-field v-model="g.name" label="E-Mail"                 
               class="py-4"></v-text-field>
               <v-text-field
@@ -140,8 +125,7 @@
               <v-btn @click="removeGenesis(n)" 
               outlined
               tile 
-               elevation="2"
-              class="mx-2" justify="center" dark color="red" >
+              class="mx-2" justify="center" dark color="red">
                 <v-icon dark> mdi-minus </v-icon>
                 remove
               </v-btn>
@@ -162,8 +146,7 @@ export default {
       token_gas_symbol: "evtx",
       token_stake_symbol: "stake",
       model: {
-        owner: "",
-          token_symbol: "DROPS",
+        token_symbol: "DROPS",
         genesis_accounts: [
         ],
       },
