@@ -9,6 +9,7 @@ import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false
+Vue.use(VueLuxon);
 
 Vue.use(VueLuxon, {
     input: {

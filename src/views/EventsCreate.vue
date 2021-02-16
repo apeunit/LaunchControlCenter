@@ -85,7 +85,6 @@
           <v-card class="pa-6">
             <v-card-text>
               <h3 class="pt-2 pb-8">Event Genesis Account</h3>
-
               <v-text-field v-model="g.name" label="E-Mail"                 
               class="py-4"></v-text-field>
               <v-text-field
@@ -149,20 +148,19 @@ export default {
       model: {
         token_symbol: "DROPS",
         genesis_accounts: [
-          {
-            name: "alice@apeunit.com",
-            genesis_balance: "",
-            faucet: true,
-            validator: true,
-            _amount_token: 500,
-            _amount_gas: 1000000,
-            _amount_stake: 100000000,
-          },
         ],
       },
     };
   },
   computed: {
+      event() {
+      return this.events.filter((e) => e.id === this.id)[0]
+    },
+
+    accountName() {
+      console.log(this.model.owner) ;
+      return this.model.owner;
+    },
     ...mapState([
       'authName',
       'loading'
@@ -180,6 +178,9 @@ export default {
           this.$router.replace('/events/')
         })
     },
+    cancel(){
+      this.$router.replace('/events/')
+    },
     addGenesis() {
       this.model.genesis_accounts.push({
         name: `Account #${this.model.genesis_accounts.length + 1}`,
@@ -190,6 +191,7 @@ export default {
         _amount_gas: 1000000,
         _amount_stake: 100000000,
       });
+
     },
     removeGenesis(n) {
       this.$delete(this.model.genesis_accounts, n);
@@ -199,6 +201,16 @@ export default {
     ])
   },
   mounted() {
+      this.model.genesis_accounts.push({
+      name: this.authName,
+      genesis_balance: "",
+      faucet: true,
+      validator: true,
+      _amount_token: 500,
+      _amount_gas: 1000000,
+      _amount_stake: 100000000,
+      })
+
     this.model.owner = this.authName
   }
 }

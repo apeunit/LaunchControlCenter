@@ -63,11 +63,13 @@
             </tbody>
           </template>
         </v-simple-table>
-
-        <h2>Accounts:</h2>
-
+    </v-tab-item>
+    <v-tab-item class="ma-4 pa-4">
+       <h2>Accounts:</h2>
+       <v-container class="d-flex flex-wrap">
         <v-card
-          class="my-4"
+          class="my-4 mx-4"
+          width="25vw"
           elevation="6"
           v-for="a in event.accounts"
           :key="a.name"
@@ -164,9 +166,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
       </v-tab-item>
-
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
@@ -186,10 +186,8 @@
         <v-card-text>
           Are you sure you want to proceed?
         </v-card-text>
-
         <v-card-actions>
           <v-spacer></v-spacer>
-
           <v-btn
             color="blue darken-1"
             tile
@@ -209,7 +207,7 @@
       </v-card>
     </v-dialog>
       </v-tab-item>
-    </v-tabs-items>
+    </v-tabs-items>       
   </v-card>
 </template>
 <script>
@@ -222,6 +220,7 @@ export default {
       deployError: null,
       items: [
         'Settings',
+        'Accounts',
         'Deploy',
         'Delete'
       ],
