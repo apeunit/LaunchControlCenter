@@ -1,15 +1,65 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
-    <v-container class="d-flex justify-space-between align-center">
-    <h1>Create Event</h1>
-       <v-btn
-      elevation="2"
-      type="submit"
-      class="my-6 d-flex justify-end"
-       outlined
-        tile
-      :loading="loading"
-    >Save Event</v-btn>
+    <v-container class="d-flex align-center">
+     <v-container class="d-flex justify-start">    
+       <h1>Create Event</h1>
+     </v-container>
+       <v-container class="d-flex justify-end">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      max-width="390"
+    >
+      <template v-slot:activator="{ on, attrs }">
+         <v-btn
+         elevation="2"
+         type="submit"
+         class="my-6 d-flex justify-end mr-2"
+         outlined
+         tile
+         :loading="loading"
+         >Save Event</v-btn>
+        
+        <v-btn
+          v-bind="attrs"
+          v-on="on"
+          elevation="2"
+          class="my-6 d-flex justify-end"
+          outlined
+          tile
+        >
+          Cancel
+        </v-btn>
+      </template>
+
+      <v-card class="px-6 py-4">
+        <v-card-title class="headline">
+       Are you sure that you want to cancel the new event?        
+      </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="black"
+            outlined
+            text
+            type="submit"
+          @click.prevent="cancel"  
+           :loading="loading">     
+            yes
+          </v-btn>
+         
+         <v-btn
+            color="black"
+            outlined
+            text
+            @click="dialog = false"
+          >
+          No          
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+     </v-container>
      </v-container>
     <v-card class="my-4 pa-6">
       <v-card-title>Event</v-card-title>
@@ -134,6 +184,8 @@
         </v-col>
       </v-row>
     </v-container>
+
+    
   </v-form>
 </template>
 <script>
@@ -142,6 +194,7 @@ export default {
   name: "WorkspacesCreate",
   data() {
     return {
+      dialog: false,
       valid: false,
       token_gas_symbol: "evtx",
       token_stake_symbol: "stake",
