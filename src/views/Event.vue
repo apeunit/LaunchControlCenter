@@ -92,7 +92,9 @@
                 </thead>
                 <tbody>
                   <tr><td>address</td><td>{{a.address}}</td></tr>
-                  <tr><td>genesis balance</td><td>{{accountsSel}}</td></tr>
+                  <tr><td>genesis balance</td><td>{{accountsSel[0].join(" ")}}</td></tr>
+                  <tr><td>gas balance</td><td>{{accountsSel[1].join(" ")}}</td></tr>
+                  <tr><td>stake</td><td>{{accountsSel[2].join(" ")}}</td></tr>
                   <tr><td>validator</td><td>{{a.validator}}</td></tr>
                   <tr><td>faucet</td><td>{{a.faucet}}</td></tr>
               </tbody>
@@ -100,6 +102,7 @@
           </v-simple-table>
           </v-card-text>
         </v-card>
+      </v-container>
       </v-tab-item>
       <v-tab-item class="ma-4 pa-4">
         <h2 class="pb-4">Deploy your event here</h2>
@@ -238,15 +241,14 @@ export default {
     },
     
     accountsSel() {
-      const a = Object.values(this.event.accounts)[0]
-      const b = Object.values(a)[2].match(/\d+[a-z]+/ig).map(m => { return { 
+      const accountValues = Object.values(this.event.accounts)[0]
+      const valuesObj = Object.values(accountValues)[2].match(/\d+[a-z]+/ig).map(m => { return { 
      val: m.match(/\d+/)[0],
      sym: m.match(/\D+/)[0],
  }
 })   
-      const z = b.map(u => Object.values(u))
-      const y = z.map(i => i.join(" ")).toString()
-      return y
+      const valArr = valuesObj.map(val => Object.values(val))
+      return valArr
  },
    validEndDate() {
     let evnts = this.events;
