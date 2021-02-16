@@ -1,15 +1,28 @@
 <template>
   <v-form @submit.prevent="submit" v-model="valid" ref="form">
-    <v-container class="d-flex justify-space-between align-center">
-    <h1>Create Event</h1>
+    <v-container class="d-flex align-center">
+     <v-container class="d-flex justify-start">    
+       <h1>Create Event</h1>
+     </v-container>
+       <v-container class="d-flex justify-end">
        <v-btn
+      elevation="2"
+      type="submit"
+      class="my-6 d-flex justify-end mr-2"
+       outlined
+        tile
+      :loading="loading"
+    >Save Event</v-btn>
+        <v-btn
+    @click.prevent="cancel" 
       elevation="2"
       type="submit"
       class="my-6 d-flex justify-end"
        outlined
         tile
       :loading="loading"
-    >Save Event</v-btn>
+    >Cancel</v-btn>
+     </v-container>
      </v-container>
     <v-card class="my-4 pa-6">
       <v-card-title>Event</v-card-title>
