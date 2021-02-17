@@ -1,19 +1,21 @@
 <template>
   <div class="login">
     <template v-if='authName'>
-      <h1>Logout</h1>
+      <h1 class="py-6"><v-icon large color="red">mdi-account-circle-outline</v-icon> Welcome to your page</h1>
+      <v-card class="pa-8 my-4">
       <p>You are logged in as {{authName}}</p>
-      <v-btn @click='logout'>Logout</v-btn>
+      <v-btn outlined elevation="2" @click='logout'>Logout</v-btn>
+       </v-card>
     </template>
     <template v-else>
-      <h1>Login</h1>
+      <h1 class="pt-6 pb-3"><v-icon large color="red">mdi-login-variant</v-icon> Login</h1>
       <v-form
         @submit.prevent="submit"
         v-model='valid'
         ref='form'
       >
       <v-card
-        class='my-6 py-1 px-3'
+        class='my-6 pa-6'
         max-width="450"
         >
         <v-card-text>
@@ -40,6 +42,8 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
+            elevation="2"
+            outlined
             :disabled="!valid"
             type="submit"
           >
@@ -48,9 +52,21 @@
         </v-card-actions>
       </v-card>
       </v-form>
-      <router-link to='/register'>
-        Register for account
-      </router-link>
+      
+     <v-btn
+          :to="`/register`"
+          class="my-4"
+          elevation="2"
+          outlined
+          color="blue darken-4"
+          >
+          <v-icon dark class="pr-2"> mdi-account-plus-outline </v-icon>  Register for account
+
+        </v-btn>  
+    
+    
+    
+    
     </template>
   </div>
 </template>

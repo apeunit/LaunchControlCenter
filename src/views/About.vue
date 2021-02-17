@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1 class="py-6"> About us <v-icon large>mdi-comment-question-outline</v-icon></h1>
+    <h1 class="py-6"> <v-icon large color="red">mdi-comment-question-outline</v-icon> About us </h1>
    <v-card class="pa-8 my-4">
     <h2>Event-Infrastructure Deployment Center</h2>
     <p> is a frontend for 

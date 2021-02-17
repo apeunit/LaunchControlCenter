@@ -74,7 +74,7 @@
           v-for="a in event.accounts"
           :key="a.name"
         >
-        <v-card-title>
+        <v-card-title class="ma-4 mb-3">
             {{a.name}}
           </v-card-title>
           <v-card-text>
