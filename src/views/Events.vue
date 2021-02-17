@@ -1,38 +1,39 @@
 <template>
   <v-row>
     <v-col>
-      <h1>Events</h1>
+      <h1 class="py-6"> Your Event Infrastructures <v-icon large>mdi-domain</v-icon></h1>
         <v-btn
           :to="`/events/create`"
-          class="ma-2"
-          fab
-          dark
-          color="indigo"
+          class="ma-4"
+          elevation="2"
+          outlined
+          color="blue darken-4"
           >
           <v-icon dark>
-            mdi-plus
+            mdi-plus 
           </v-icon>
+          add new infrastructure
         </v-btn>
         <template v-if='events'>
           <v-card
-            tile
             class="my-4 pa-6"
             v-for='event in events'
             :key='event.id'
           >
             <v-card-title class="pb-6">
-              Token Symbol: {{event.token_symbol}}
+              Token symbol name: {{event.token_symbol}}
             </v-card-title>
             <v-card-text class="pb-1">
-              Starts on: {{event.starts_on | luxon}}
+              Event starts on: {{event.starts_on | luxon}}
             </v-card-text>
             <v-card-text class="pb-6">
-              Ends on: {{validEndDate}}
+              Event ends on: {{validEndDate}}
             </v-card-text>
             <v-card-actions>
               <v-btn
               justify-self="space-between"
-              outlined tile 
+              outlined
+              elevation="2"
                 :to="`/event/${event.id}`"
               >
                 Select

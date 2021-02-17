@@ -3,8 +3,7 @@
     <v-toolbar 
           height="100px"
           outlined
-          tile  
-          color="darkolivegreen" flat>
+          flat>
       <v-toolbar-title class="ml-10 mt-4">
         <h3>Event title: {{ id }}</h3>
       </v-toolbar-title>
@@ -18,8 +17,8 @@
       </template>
     </v-toolbar>
     <v-tabs-items v-model="tab">
-      <v-tab-item class="ma-4 pa-4">
-        <h2>Settings</h2>
+      <v-tab-item class="ma-4 pa-6">
+        <h2 class="pb-6 pl-3">Settings</h2>
         <v-simple-table>
           <template v-slot:default>
             <thead>
@@ -65,12 +64,12 @@
           </template>
         </v-simple-table>
     </v-tab-item>
-    <v-tab-item class="ma-4 pa-4">
-       <h2>Accounts:</h2>
+    <v-tab-item class="ma-4 pa-6">
+       <h2 class="pb-4 pl-6">Accounts:</h2>
        <v-container class="d-flex flex-wrap">
         <v-card
           class="my-4 mx-4"
-          width="25vw"
+          width="350"
           elevation="6"
           v-for="a in event.accounts"
           :key="a.name"
@@ -105,7 +104,7 @@
         </v-card>
       </v-container>
       </v-tab-item>
-      <v-tab-item class="ma-4 pa-4">
+      <v-tab-item class="ma-4 py-6 px-10">
         <h2 class="pb-4">Deploy your event here</h2>
         <p>
           Deploy can not be undone. 
@@ -135,7 +134,7 @@
     </v-dialog>
         <v-btn @click.stop="deployDialog = true"  
         outlined
-        tile 
+        class="my-2"
         dark color="green"> Deploy </v-btn>
          <v-dialog
       v-model="deployDialog"
@@ -171,14 +170,14 @@
       </v-card>
     </v-dialog>
       </v-tab-item>
-      <v-tab-item class="ma-4 pa-4">
+      <v-tab-item class="ma-4 py-6 px-10">
         <h2 class="pb-4">Delete your event here</h2>
         <p>Deleting can not be undone.</p>
         <v-btn @click.stop="deleteDialog = true"            
             outlined 
-            tile 
             dark 
-            color="red"> Delete </v-btn>
+            color="red"
+            class="my-2"> Delete </v-btn>
          <v-dialog
       v-model="deleteDialog"
       max-width="290"
@@ -194,7 +193,6 @@
           <v-spacer></v-spacer>
           <v-btn
             color="blue darken-1"
-            tile
             @click="deleteDialog = false"
           >
             No

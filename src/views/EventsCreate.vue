@@ -46,8 +46,7 @@
           @click.prevent="cancel"  
            :loading="loading">     
             yes
-          </v-btn>
-         
+          </v-btn>      
          <v-btn
             color="black"
             outlined
