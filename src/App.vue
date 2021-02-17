@@ -23,8 +23,9 @@
        <v-container class="d-flex justify-end">
       <v-btn
        outlined
+       class="router-link"
       >
-      <router-link to="/login">
+      <router-link class="black--text" to="/login">
         <template v-if='authName'>
           profile       
           </template>
@@ -106,3 +107,9 @@ export default {
 </script>
 
 
+<style scoped>
+
+.router-link a{
+    text-decoration: none;
+}
+</style>
