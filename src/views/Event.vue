@@ -1,11 +1,12 @@
 <template>
   <v-card>
     <v-toolbar 
+          height="100px"
           outlined
           tile  
-          color="darkolivegreen" dark flat>
-      <v-toolbar-title>
-        <h3>Event: {{ id }}</h3>
+          color="darkolivegreen" flat>
+      <v-toolbar-title class="ml-10 mt-4">
+        <h3>Event title: {{ id }}</h3>
       </v-toolbar-title>
       <template v-slot:extension>
         <v-tabs v-model="tab" align-with-title>
