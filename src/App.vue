@@ -14,7 +14,7 @@
         <v-btn
         class="mx-2" 
         outlined
-        text to='/events'>Events</v-btn>
+        text to='/events'>Infrastructures</v-btn>
         <v-btn
         class="mx-2"  
         outlined
