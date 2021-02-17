@@ -3,28 +3,27 @@
     <v-app-bar
       app
       color="white"
+      elevation="2" 
       flat
     >
-      <v-container class="py-0 fill-height">
+      <v-container class="py-0 fill-height d-flex justify-start">
 				<v-btn 
         class="mr-2"
         outlined
-        tile
         text to='/'>Home</v-btn>
         <v-btn
         class="mx-2" 
         outlined
-        tile
         text to='/events'>Events</v-btn>
         <v-btn
         class="mx-2"  
         outlined
-        tile
         text to='/about'>About</v-btn>
       </v-container>
+       <v-container class="d-flex justify-end">
       <v-btn
        outlined
-       tile>
+      >
       <router-link to="/login">
         <template v-if='authName'>
           profile       
@@ -34,9 +33,10 @@
         </template>
       </router-link>
       </v-btn>
+      </v-container>
     </v-app-bar>
 
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-2">
       <v-container>
 				<router-view></router-view>
       </v-container>
@@ -104,3 +104,5 @@ export default {
   }
 };
 </script>
+
+
