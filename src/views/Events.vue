@@ -21,13 +21,13 @@
             :key='event.id'
           >
             <v-card-title class="pb-6">
-              Token Symbol: {{event.token_symbol}}
+              Token symbol name: {{event.token_symbol}}
             </v-card-title>
             <v-card-text class="pb-1">
-              Starts on: {{event.starts_on | luxon}}
+              Event starts on: {{event.starts_on | luxon}}
             </v-card-text>
             <v-card-text class="pb-6">
-              Ends on: {{validEndDate}}
+              Event ends on: {{validEndDate}}
             </v-card-text>
             <v-card-actions>
               <v-btn
