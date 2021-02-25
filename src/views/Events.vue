@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col>
-      <h1 class="py-6"> Your Event Infrastructures <v-icon large>mdi-domain</v-icon></h1>
+      <h1 class="py-6"> <v-icon large color="red">mdi-domain</v-icon> Your Event Infrastructures </h1>
         <v-btn
           :to="`/events/create`"
           class="ma-4"
@@ -15,8 +15,10 @@
           add new infrastructure
         </v-btn>
         <template v-if='events'>
+          <container class="d-flex flex-wrap">
           <v-card
-            class="my-4 pa-6"
+            width="400"
+            class="ma-4 pa-6"
             v-for='event in events'
             :key='event.id'
           >
@@ -31,6 +33,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn
+              class="ml-2 mb-4"
               justify-self="space-between"
               outlined
               elevation="2"
@@ -40,6 +43,7 @@
               </v-btn>
             </v-card-actions>
           </v-card>
+            </container>
         </template>
         <template v-else>
           <v-alert
@@ -48,8 +52,9 @@
             type="info"
             elevation="2"
           >
+
           <p>
-            Pease click the plus button below and create a new event
+            Please click the plus button below and create a new event
           </p>
           </v-alert>
         </template>

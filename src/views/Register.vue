@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <h1>Register</h1>
+    <h1 class="pt-6 pb-3"><v-icon large color="red">mdi-account-plus-outline</v-icon> Register</h1>
 
     <v-form
       @submit.prevent="submit"
@@ -8,7 +8,7 @@
       ref='form'
     >
       <v-card
-        class='my-6 py-1 px-3'
+        class='my-6 pa-6'
         max-width="450"
         :loading="loading"
       >
@@ -52,6 +52,8 @@
         </v-card-text>
         <v-card-actions>
           <v-btn
+            outlined
+            elevation="2"
             :disabled="!valid || loading"
             type="submit"
           >
@@ -60,6 +62,16 @@
         </v-card-actions>
       </v-card>
     </v-form>
+         <v-btn
+          :to="`/login`"
+          class="my-4"
+          elevation="2"
+          outlined
+          color="blue darken-4"
+          >
+          <v-icon dark class="pr-2"> mdi-login-variant </v-icon>  log in
+
+        </v-btn>  
   </div>
 </template>
 <script>
