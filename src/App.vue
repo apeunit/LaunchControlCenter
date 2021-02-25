@@ -54,19 +54,29 @@
       width="100vw"
     >
       <v-card-text>
-        <v-btn
+        <!-- <v-btn
           v-for="icon in icons"
           :key="icon"
           class="mx-4 white--text"
           icon
+
         >
           <v-icon size="24px">
             {{ icon }}
           </v-icon>
-        </v-btn>
+        </v-btn> -->
+
+            <v-btn icon href="https://github.com/apeunit/LaunchControlCenter" class="mx-2 plain white--text transparent "><v-icon size="24px">
+            mdi-github
+          </v-icon></v-btn>
+           <v-btn icon href="https://apeunit.com/" class="mx-2 plain white--text transparent "><v-icon size="24px">
+            mdi-robot-excited-outline
+          </v-icon></v-btn>
+
+          
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-text class="white--text">
+      <v-card-text class="white--text" icon>
         {{ new Date().getFullYear() }} — <strong> version: {{ status }}</strong>
       </v-card-text>
     </v-card>
