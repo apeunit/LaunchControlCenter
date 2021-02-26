@@ -1,27 +1,25 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
+    <v-toolbar
       color="white"
-      elevation="2" 
-      flat
     >
-      <v-container class="py-0 fill-height d-flex justify-start">
+        <v-toolbar-items class="hidden-sm-and-down">
+        <v-container class="d-flex flex-row green">
 				<v-btn 
-        class="mr-2"
-        outlined
-        text to='/'>Home</v-btn>
+        outlined 
+        to='/'>Home</v-btn>
         <v-btn
-        class="mx-2" 
         outlined
-        text to='/events'>Infrastructures</v-btn>
+        flat
+        to='/events'>Infrastructures</v-btn>
         <v-btn
-        class="mx-2"  
         outlined
-        text to='/about'>About</v-btn>
-      </v-container>
-       <v-container class="d-flex justify-end">
-      <v-btn
+        flat
+        to='/about'>About</v-btn>
+       </v-container>
+       <v-spacer></v-spacer>
+       <v-container class="grey justify-self-end">
+       <v-btn
        outlined
        class="router-link"
       >
@@ -35,7 +33,25 @@
       </router-link>
       </v-btn>
       </v-container>
-    </v-app-bar>
+      </v-toolbar-items>
+
+    <v-menu class="hidden-md-and-up">
+        <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
+            <v-list>
+              <v-list-tile>
+              <v-list-tile-content>
+                HOME
+                </v-list-tile-content>
+                <v-list-tile-content>
+                INFRASTRUCTURES
+                </v-list-tile-content>
+                <v-list-tile-content>
+                 ABOUT
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+        </v-menu>
+        </v-toolbar>
 
     <v-main class="grey lighten-2">
       <v-container>
@@ -74,12 +90,12 @@
 import {mapActions, mapState} from 'vuex'
 export default {
   name: 'App',
-  data: () => ({
-        icons: [
-        'mdi-github',
-        'mdi-robot-excited-outline',
-      ],
-  }),
+  // data: () => ({
+  //       icons: [
+  //       'mdi-github',
+  //       'mdi-robot-excited-outline',
+  //     ],
+  // }),
   methods: {
     ...mapActions([
       'loadHealth'
