@@ -1,24 +1,16 @@
 <template>
   <v-app>
-    <v-toolbar
-      color="white"
-    >
-        <v-toolbar-items class="hidden-sm-and-down">
-        <v-container class="d-flex flex-row green">
-				<v-btn 
-        outlined 
+       <v-app-bar class="hidden-sm-and-down" max-height="60vh"
+    > 
+				<v-btn class="plain transparent mr-4"
         to='/'>Home</v-btn>
         <v-btn
-        outlined
-        flat
+        class="plain transparent mr-4"
         to='/events'>Infrastructures</v-btn>
         <v-btn
-        outlined
-        flat
-        to='/about'>About</v-btn>
-       </v-container>
-       <v-spacer></v-spacer>
-       <v-container class="grey justify-self-end">
+        class="plain transparent mr-4"       
+        to='/about'>About</v-btn> 
+        <v-spacer></v-spacer>
        <v-btn
        outlined
        class="router-link"
@@ -32,26 +24,42 @@
         </template>
       </router-link>
       </v-btn>
-      </v-container>
-      </v-toolbar-items>
 
-    <v-menu class="hidden-md-and-up">
-        <v-toolbar-side-icon slot="activator"></v-toolbar-side-icon>
-            <v-list>
-              <v-list-tile>
-              <v-list-tile-content>
-                HOME
-                </v-list-tile-content>
-                <v-list-tile-content>
-                INFRASTRUCTURES
-                </v-list-tile-content>
-                <v-list-tile-content>
-                 ABOUT
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-        </v-menu>
-        </v-toolbar>
+    </v-app-bar>
+     <v-app-bar class="hidden-md-and-up"
+    >
+      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    </v-app-bar>
+    
+    <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      temporary
+    >
+      <v-list
+        nav
+        dense
+      >
+        <v-list-item-group
+          v-model="group"
+          active-class="deep-purple--text text--accent-4"
+        >
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-home</v-icon>
+            </v-list-item-icon>
+              <v-list-item-title to='/events'>
+              Home</v-list-item-title>   
+          </v-list-item>
+          <v-list-item>          
+            <v-list-item-icon>
+              <v-icon>mdi-account</v-icon>
+            </v-list-item-icon>           
+            <v-list-item-title>Account</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>     
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main class="grey lighten-2">
       <v-container>
@@ -96,10 +104,19 @@ export default {
   //       'mdi-robot-excited-outline',
   //     ],
   // }),
+
+  data: () => ({
+      drawer: false,
+      group: null,
+    }),
+
   methods: {
     ...mapActions([
       'loadHealth'
     ]),
+      menuItems () {
+      return this.menu
+    } 
   },
   computed: {
      ...mapState([
