@@ -30,7 +30,7 @@
     >
       <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
     </v-app-bar>
-    
+
     <v-navigation-drawer
       v-model="drawer"
       absolute
@@ -49,13 +49,48 @@
               <v-icon>mdi-home</v-icon>
             </v-list-item-icon>
               <v-list-item-title to='/events'>
-              Home</v-list-item-title>   
-          </v-list-item>
+               <router-link class="black--text" to="/">
+                <!-- <template> -->
+                 Home
+                <!-- </template> -->
+               </router-link>
+              </v-list-item-title>   
+           </v-list-item>
           <v-list-item>          
+            <v-list-item-icon>
+              <v-icon>mdi-domain</v-icon>
+            </v-list-item-icon>           
+            <v-list-item-title>      
+              <router-link class="black--text" to="/events">
+                <!-- <template> -->
+                 Infrastructures
+                <!-- </template> -->
+               </router-link>
+               </v-list-item-title>
+          </v-list-item>
+            <v-list-item>          
+            <v-list-item-icon>
+              <v-icon>mdi-information-outline</v-icon>
+            </v-list-item-icon>           
+            <v-list-item-title>      
+              <router-link class="black--text" to="/about">
+                <!-- <template> -->
+                 About
+                <!-- </template> -->
+               </router-link>
+               </v-list-item-title>
+          </v-list-item>
+            <v-list-item>          
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>           
-            <v-list-item-title>Account</v-list-item-title>
+            <v-list-item-title>      
+              <router-link class="black--text" to="/login">
+                <!-- <template> -->
+                 Profile
+                <!-- </template> -->
+               </router-link>
+               </v-list-item-title>
           </v-list-item>
         </v-list-item-group>     
       </v-list>
@@ -138,7 +173,7 @@ export default {
 
 <style scoped>
 
-.router-link a{
+.router-link a {
     text-decoration: none;
 }
 </style>
